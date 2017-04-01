@@ -16,5 +16,9 @@ $navbar = [
             "text" => "Redovisning",
             "route" => "report",
         ],
+        "test" => [
+            "text" => "Test",
+            "route" => "test",
+        ],
     ]
 ];

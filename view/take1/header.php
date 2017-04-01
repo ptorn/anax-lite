@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" href="../htdocs/css/style.min.css">
-<title><?= $title ?></title>
+<title><?= $title ?> | Peder Tornberg</title>
 </head>
 <body>
 <div class="wrap-all">
