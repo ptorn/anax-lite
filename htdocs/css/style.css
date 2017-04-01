@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css?family=Cherry+Cream+Soda');
+
+body {
+  padding-top: 50px;
+  /*padding-bottom: 30px;*/
+  margin: 0px;
+}
+
+h4 {
+    font-weight: bold;
+}
+
+img {
+    max-width: 100%;
+}
+
+.center {
+    margin: 0 auto;
+}
+
+.frontpage-image {
+    display: block;
+}
+
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+.theme-showcase .navbar .container {
+  width: auto;
+}
+a.anchor {
+    display: block;
+    position: relative;
+    top: -60px;
+    visibility: hidden;
+}
+
+ul.report {
+    padding: 0;
+}
+
+ul.report li {
+    list-style: none;
+    display: inline-block;
+    font-size: 2em;
+}
+
+ul.report li::after {
+    content: " |";
+}
+
+ul.report li:last-child:after {
+    content: "";
+}
+.main {
+    padding-bottom: 30px;
+}
+
+.form-login {
+    width: 300px;
+    margin: 0 auto;
+    margin-bottom: 22px;
+}
+
+.footer {
+    padding: 22px 0;
+    background-image: linear-gradient(to bottom, #333, #111);
+    color: #f3f3f3;
+}
+.footer p {
+    font-family: 'Cherry Cream Soda', cursive;
+    margin-left: 22px;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: bold;
+}
+.circle {
+    width: 80px;
+    height: 80px;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+}

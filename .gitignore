@@ -1,0 +1,6 @@
+/.bin
+/build
+/cache
+/vendor
+/theme/node_modules
+/theme/build

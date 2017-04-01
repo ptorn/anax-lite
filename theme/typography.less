@@ -1,0 +1,59 @@
+/**
+* Anax Flat theme. Typography
+*/
+@import url(base.less);
+@import url('https://fonts.googleapis.com/css?family=Exo|Lobster|Share+Tech+Mono');
+
+@fontFamilyExo:             "Exo";
+@fontFamilyLobster:         "Lobster";
+@fontFamilyShareTechMono:   "Share Tech Mono", monospace;
+
+
+@fontFamilyHeadings:    @fontFamilyLobster, @fontFamilyCambria;
+@fontFamilyBody:        @fontFamilyExo, @fontFamilyCalibri;
+@fontFamilyMonospace:   @fontFamilyShareTechMono;
+
+@mediaBreakWidth: 750px;
+@maxWidth: 960px;
+@bodyBgColor: #E3FFD6;
+@headerBgColor: #FF8641;
+@headerLogoText: #BCFF9C;
+@fontColor: #000;
+@linkColor: #000;
+@visitedLinkColor: #666;
+@wrap-allBgColor: #fff;
+@backgroundBreadcrumb: #fff;
+@breadcrumbLinkColor: #000;
+@backgroundByline: #E3FFD6;
+@footerFontColor: #000;
+@footerBgColor: #FD41D4;
+@footerLinkColor: #000;
+@slideNavLinkColor: #000;
+@slideNavBgColor: #FD41D4;
+@navbarItemColor: #333;
+@navbarItemBgColor: #FF8641;
+@navbarItemHoverColor: #333;
+@navbarItemHoverBgColor: #9DFF6E;
+@maxButtonFontSize: 2em;
+@maxButtonColor: #f3f3f3;
+
+body {
+    a {
+        text-decoration: underline;
+    }
+}
+
+.breadcrumb-wrap {
+    ul {
+        padding-left: @gutterWidth/2px;
+    }
+}
+
+.fa,
+.rm-max .rm-small .rm-button.rm-clicked {
+    color: #FFFFFF;
+}
+
+.outer-wrap-after-main {
+    background-color: @backgroundByline;
+}

@@ -1,0 +1,144 @@
+/**
+* Anax Flat theme. Style.less
+*/
+@import url(base.less);
+@import url('https://fonts.googleapis.com/css?family=Raleway|Trirong');
+
+@fontFamilyRaleway:         "Raleway";
+@fontFamilyTrirong:         "Trirong";
+@fontFamilyHeadings:  @fontFamilyRaleway, @fontFamilyCambria;
+@fontFamilyBody:      @fontFamilyTrirong, @fontFamilyCalibri;
+@fontFamilyCode:      @fontFamilyCourier;
+
+@maxWidth: 960px;
+@bodyBgColor: #111;
+@headerBgColor: none;
+@headerLogoText: #eee;
+@fontColor: #fff;
+@linkColor: #fff;
+@visitedLinkColor: #fff;
+@mainBgColor: none;
+@wrap-allBgColor: #fff;
+@flashHeight: auto;
+@backgroundBreadcrumb: none;
+@breadcrumbLinkColor: #fff;
+@backgroundByline: none;
+@bylineColor: #111;
+@footerFontColor: #eee;
+@footerBgColor: none;;
+@footerLinkColor: #fff;
+@slideNavLinkColor: #E3FFD6;
+@slideNavBgColor: #333;
+@navbarDesktopFontSize: 0.95em;
+@navbarItemColor: #eee;
+@navbarItemBgColor: none;
+@navbarItemHoverColor: #eee;
+@navbarItemHoverBgColor: #999;
+@maxButtonFontSize: 2em;
+@maxButtonColor: #fff;
+
+html.hgrid .inner-wrap {
+    @gridImage: "../img/grid/horisontal-grid-22-white.png";
+    #hgrid .showGrid(@gridImage);
+}
+
+body {
+    background-image: linear-gradient(to bottom, #29323c, #485563);
+
+    a {
+        text-decoration: underline;
+        font-weight: bold;
+    }
+    code {
+        color: #111;
+    }
+}
+/** --------------------------------------------------------------
+ *  Header
+ */
+.site-header {
+    height: auto;
+    .site-logo-text {
+        a {
+            font-weight: normal;
+        }
+    }
+}
+
+@media only screen and (min-width: @maxWidth) {
+    .outer-wrap-header {
+        position: fixed;
+        z-index: 1;
+        width: 100%;
+        box-shadow: 0 2px 3px #333;
+    }
+}
+
+/** --------------------------------------------------------------
+ *  Navigation
+ */
+.navbar2 {
+    float: right;
+    .rm-desktop li {
+        // background-image: linear-gradient(to bottom, #888, #666);
+        background-image: linear-gradient(to top, #232526, #414345);
+
+    }
+    .rm-desktop li ul {
+        background-image: linear-gradient(to bottom, #888, #666);
+    }
+    .rm-desktop li ul li {
+        background: none;
+    }
+ }
+
+/** --------------------------------------------------------------
+ *  Wrapper
+ */
+.wrap-all {
+    background-color: rgba(0,0,0,0.4);
+}
+
+.outer-wrap-header {
+    // background-image: linear-gradient(to bottom, #888, #666);
+    background-image: linear-gradient(to top, #232526, #414345);
+
+}
+
+.route-typography .outer-wrap-main {
+    background-image: url("../img/grid/horisontal-grid-22-white.png");
+}
+
+.outer-wrap-after-main {
+    background-color: #c3c3c3;
+    background-color: rgba(195,195,195,0.6);
+}
+
+.outer-wrap-footer {
+    background-color: #333;
+}
+
+.inner-wrap-flash {
+    width: 100%;
+    max-width: 100%;
+}
+
+.img-responsive {
+    height: auto;
+    max-width: 100%;
+}
+
+.outer-wrap-footer {
+    background-image: linear-gradient(to bottom, #333, #111);
+}
+
+.byline {
+    .circle {
+        width: 80px;
+        height: 80px;
+        -webkit-border-radius: 40px;
+        -moz-border-radius: 40px;
+        border-radius: 40px;
+    }
+}
+.responsivLayout();

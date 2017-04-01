@@ -1,0 +1,68 @@
+// .showGrid(@maxWidth: 960px) {
+//     // background-image: url("../img/grid/grid960x12x60x20.png");
+//     background-image: url("../img/grid/grid940x12x60x20-nomargin.png");
+//
+//     background-repeat: repeat-y;
+//     background-size: 100% auto;
+//     margin-left: auto;
+//     margin-right: auto;
+//
+//     @media (min-width: @maxWidth) {
+//         background-size: @maxWidth auto;
+//     }
+// }
+//
+// .showHorisontalGrid(@maxWidth: 960px) {
+//     background-image: url("../img/grid/horisontal-grid-22.png");
+// }
+
+#vgrid {
+
+    // Utility variable, you should never need to modify this
+    @gridSystemWidth: @columns * (@columnWidth + @gutterWidth) * 1px;
+
+    // Use % for fluid layout
+    @totalWidth: 100% / @gridSystemWidth;
+
+
+
+    /**
+     * Wrap grid in a container.
+     */
+    .grid(@maxWidth) {
+        margin-right: auto;
+        margin-left: auto;
+        max-width: @maxWidth;
+    }
+
+
+
+    /**
+     * Show grid.
+     */
+    .showGrid(@maxWidth, @gridImage) {
+        background: url("@{gridImage}") repeat-y fixed center center;
+        background-size: @maxWidth auto;
+
+        @media (min-width: @maxWidth) {
+            background-size: @maxWidth auto;
+        }
+    }
+}
+
+#hgrid {
+    .showGrid(@gridImage) {
+        background-image: url("@{gridImage}");
+    }
+
+    .font(@fontSize: 100.01%, @fontFamily: @fontFamilyBody) {
+        font: @fontSize/@lineHeight @fontFamily;
+    }
+
+    .fontSize(@fontSize) {
+        font-size: @fontSize;
+        line-height: @lineHeight / unit(@fontSize) * ceil(unit(@fontSize) / @lineHeight);
+    }
+
+    // 5/4 for smaller font-size, incremental leading.
+}
