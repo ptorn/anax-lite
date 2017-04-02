@@ -3,7 +3,7 @@
 /**
  * Routes.
  */
-$app->router->add("", function () use ($app){
+$app->router->add("", function () use ($app) {
     $app->view->add("take1/header", ["title" => "Start"]);
     // $app->view->add("take1/navbar");
     $app->view->add("take1/flash");
@@ -27,7 +27,7 @@ $app->router->add("about", function () use ($app) {
               ->send();
 });
 
-$app->router->add("report", function () use ($app){
+$app->router->add("report", function () use ($app) {
     $app->view->add("take1/header", ["title" => "Redovisning"]);
     // $app->view->add("take1/navbar");
     $app->view->add("take1/flash");
@@ -39,7 +39,7 @@ $app->router->add("report", function () use ($app){
               ->send();
 });
 
-$app->router->add("test", function () use ($app){
+$app->router->add("test", function () use ($app) {
     $app->view->add("take1/header", ["title" => "Test"]);
     // $app->view->add("take1/navbar");
     $app->view->add("take1/flash");
