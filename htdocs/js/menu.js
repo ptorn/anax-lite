@@ -1,3 +1,4 @@
+"use strict";
 (function () {
     var button = document.getElementById("mobile-nav-top");
     console.log(button);
