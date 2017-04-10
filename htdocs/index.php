@@ -19,15 +19,26 @@ $app->response = new \Anax\Response\Response();
 $app->url      = new \Anax\Url\Url();
 $app->router   = new \Anax\Route\RouterInjectable();
 $app->view     = new \Anax\View\ViewContainer();
+$app->session  = new \Peto16\Session\Session();
+$app->navbar   = new \Peto16\Navbar\Navbar();
 
 // Inject $app into the view container for use in view files.
 $app->view->setApp($app);
 
+// Inject $app into the navbar to access config and to use in views.
+$app->navbar->setApp($app);
+
 // Update view configuration with values from config file.
 $app->view->configure("view.php");
 
+// Update navbar with configuration from navbars config file.
+$app->navbar->configure("navbar.php");
+
 // Init the object of the request class.
 $app->request->init();
+
+// Start the session
+$app->session->start();
 
 // Init the url-object with default values from the request object.
 $app->url->setSiteUrl($app->request->getSiteUrl());

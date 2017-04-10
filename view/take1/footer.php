@@ -9,6 +9,6 @@
 </div>
 
 </div> <!-- end of wrapper -->
-<script src="../htdocs/js/menu.js"></script> 
+<script src="<?= $app->url->asset('js/menu.js'); ?>"></script> 
 </body>
 </html>

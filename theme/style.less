@@ -141,4 +141,74 @@ body {
         border-radius: 40px;
     }
 }
+.calendar-navigation {
+    overflow: auto;
+    margin-bottom: @magicNumber;
+    .calendar-previous {
+        float: left;
+    }
+
+    .calendar-next {
+        float: right;
+    }
+}
+
+.calendar-image {
+    clear: both;
+    text-align: center;
+}
+
+.calendar {
+    margin: 0 auto;
+    box-sizing: border-box;
+    max-width: 640px;
+    border: 1px solid #222;
+    background-color: #222;
+    color: #222;
+    table {
+        text-align: left;
+        width: 100%;
+        .red {
+            color: red;
+        }
+        .grey {
+            color: #c3c3c3;
+        }
+        .today {
+            background-color: #999;
+        }
+        .calendar-week {
+            background-color: #D0D0D0;
+            font-weight: bold;
+        }
+        .week {
+            background-color: #D0D0D0;
+        }
+        th {
+            background-color: #fff;
+            border-bottom: 1px solid #222;
+
+        }
+        td {
+            background-color: #fff;
+            width: 12.5%;
+        }
+    }
+
+}
+
+// Session
+.session-button {
+    a {
+        margin-top: @magicNumber;
+        padding: (@magicNumber/2) @magicNumber;
+        background-color: #111;
+        text-decoration: none;
+        border-radius: 5%
+    }
+    a:hover {
+        background-color: #333;
+    }
+}
+
 .responsivLayout();
