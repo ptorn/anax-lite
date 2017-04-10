@@ -27,7 +27,27 @@
                 <p>Det gick bra. Inga konstigheter än så länge. Jag gjorde den första tredjedelen vilket inte var så svårt. SQL labben som vi gjorde i htmlphp var nyttig känner jag. Den kände jag att jag fick bättre koll på SQL så man känner igen sig. Innan kursen htmlphp så har jag varit inne i databaser och rotat i samband med diverse olika CMS-system, men aldrig riktigt gått in på djupet. Mest löst några saker och sen lämnat det.</p>
 
                 <h2>Kmom02</h2>
-                <p>Lite text framöver.</p>
+
+                <h3>Allmänt:</h3>
+                <p>Hade gärna gjort mer på momentet, men jag kände att jag inte hade tid att göra alla extrauppgifterna. Men jag filade lite på navbaren så den kunde hantera undermenyer vilket jag gjorde med hjälp utav en rekursivfunktion.</p>
+                <p>Till Kalendern så la jag till att man har olika bilder för varje månad samt veckonummerna.</p>
+
+                <h3>Hur känns det att skriva kod utanför och inuti ramverket, ser du fördelar och nackdelar med de olika sätten?</h3>
+                <p>Tycker det kändes bra. Det finns fördelar med att koda i ramverket som tex hur jag valde att göra session en del utav $app så att jag kan nyttja session på alla sidorna. Men jag valde att låta kalendern instansieras i routen och då enbart skapas när man väljer att kika på kalendern.  Fördelarna är ju att man inte behöver exponera hela ramverket för sidor som inte är intresserade utav alla delarna utan delarna som alla vill ha kan man lägga i ramverket.</p>
+
+                <h3>Hur väljer du att organisera dina vyer?</h3>
+                <p>Jag har kört på som efterfrågats och lagt dom i take1 och navbar2. Kod som återkommer på alla sidorna som header, banner, byline och footer har jag delat upp i egna filer som inkluderas i routerna. Sen har varje sida sin egen view som home, report, calendar, about, session, test, dump.</p>
+                <p>Logiken håller jag i klasserna för att hålla mina vyer rena. I kalender vyn så kollar jag get variablerna annars är det bara utskrifter.</p>
+
+                <h3>Berätta om hur du löste integreringen av klassen Session.</h3>
+                <p>Tanken jag hade var att jag ville kunna utnyttja session-klassen över hela sidan så då föll det sig naturligt att lägga den i $app->session så att den blir en del utav ramverket. Det gör jag i min indexfil när jag instansierar övriga objekt till ramverket. Sen skapade jag en egen session routfil som importeras till ”config/route/base”. I routen så löser jag lite logik direkt eftersom man bara ska  vidarebefordras tillbaka. Först var jag lite vilsen på hur jag skulle lösa det, men jag kikade runt i modulerna som vi hade i vendor/anax där vi redan har initerat dessa objekt i ramverket så jag tänkte att dom kan jag använda. Då fann jag respons->redirect och respons->sendJson som hjälpte mig att lösa uppgiften. Tex Json-objektet skapade jag i routen och skickade en respons->sendJson.</p>
+
+                <h3>Berätta om hur du löste uppgiften med Tärningsspelet 100/Månadskalendern, hur du tänkte, planerade och utförde uppgiften samt hur du organiserade din kod?</h3>
+                <p>Här valde jag att göra uppgiften med månadskalendern då jag tyckte att den kändes mer användbar för mig. Jag började med att bygga upp klassen Calendar i src mappen och la till den i mitt namespace. Jag tänkte från början att jag tyckte det var onödigt att ta med den i ramverket från början så jag instansierar kalenderobjektet i routen Calendar och skickar med den som en variabel som innehåller objektet till min view där jag kan anropa outputHtmlTable() på objektet. Så nu har jag inget med $app att göra beträffande kalendern utan den är helt fristående.</p>
+                <p>Sen när jag hade en fungerande kalender så tänkte jag att vi skulle ju göra det lite mer objektorienterat så då kände jag att månad var något som jag kunde dela från kalendern då en kalender består utav flera månader så jag skapade klassen Month som jag använder i min klass Calendar. Logiken för att hantera en månad ligger i Month. Det var smidigt att göra så när man samtidigt ville ha information om månaden före och månaden efter så då kunde jag skapa objektet före och efter beroende på den månaden som var aktiv och genast få tillgång till användbar data. Sen valde jag mig utav att använda mig utav GET variabler för jag såg fördelar med att kunna ha urler direkt till en månad.</p>
+
+                <h3>Några tankar kring SQL så här långt?</h3>
+                <p>Tycker det känns bra. Man inser att det går att organisera och sammanställa data på ett smidigt och effektivt sätt. Samtidigt blir det mer påtagligt om jag återkopplar till en tidigare föreläsning där Mikael Roos går in på att var sak ska göra sitt. En halv taskig programmerare kanske gör ett generellt anrop till databasen och hämtar hem allt och sedan behandlar den data i det språk som man jobbar i istället för att fråga databasen rätt från början så man får det man vill ha som man vill ha det. Smidigare med om man jobbar på större system där kanske databasen ligger på en annan server så man inte belastar exempelvis webbservern för mycket genom att låta den göra allt jobb. Är en god ide att låta databasen jobba lite också.</p>
 
                 <h2>Kmom03</h2>
                 <p>Lite text framöver.</p>
