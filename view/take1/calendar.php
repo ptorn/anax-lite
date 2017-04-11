@@ -15,7 +15,7 @@ $nextYear = $calendar->nextMonthObj->year;
     <div class="inner-wrap inner-wrap-main">
         <div class="row">
             <main class="main">
-                <h2><?= $calendar->getCalendarTitle(); ?></h1>
+                <h2><?= $calendar->getCalendarTitle(); ?></h2>
                     <div class="calendar-navigation">
                         <div class="calendar-previous"><a href="?year=<?= $previousYear ?>&month=<?= $previousMonth ?>">Föregående</a></div>
                         <div class="calendar-next"><a href="?year=<?= $nextYear ?>&month=<?= $nextMonth ?>">Nästa</a></div>

@@ -23,6 +23,6 @@ class Month
         $this->month = $month;
         $this->nrDays = cal_days_in_month(CAL_GREGORIAN, $this->month, $this->year);
         $this->firstWeekNr = date('W', strtotime($this->year . "-" . $this->month . "-01"));
-        $this->firstDayOfMonth = date('w', strtotime($this->year . "-" . $this->month . "-01"));
+        $this->firstDayOfMonth = date('w', strtotime($this->year . "-" . $this->month . "-01")) == 0 ? 7 : date('w', strtotime($this->year . "-" . $this->month . "-01"));
     }
 }

@@ -96,8 +96,7 @@ class Calendar
         $weekNr = $this->monthObj->firstWeekNr;
         $checkLoop = true; // Used to stop adding weeks.
         while ($checkLoop) {
-            $output .= "<tr><td class=\"calendar-week\">" . $weekNr . "</td>";
-
+            $output .= "<tr><td class=\"calendar-week\">" . (int)$weekNr . "</td>";
             for ($i = 0; $i < 7; $i++) {
                 if ($counter < count($daysArray)) {
                     $dayNr = $daysArray[$counter];
@@ -119,6 +118,7 @@ class Calendar
                 }
             }
             $weekNr++;
+            $weekNr = $weekNr == 53 ? 1 : $weekNr;
             $output .= "</tr>";
         }
         $output .= "</table></div>";
