@@ -71,16 +71,6 @@ class Calendar
             }
             array_push($daysArray, $data);
         }
-
-        // Add next months days to daysArray.
-        if (count($daysArray) < 35) {
-            $counter = 1;
-            for ($x = count($daysArray); $x < 35; $x++) {
-                array_push($daysArray, "<td class=\"grey\">" . $counter . "</td>");
-                $counter++;
-            }
-        }
-
         return $daysArray;
     }
 
@@ -102,19 +92,33 @@ class Calendar
         }
         $output .= "</tr>";
         $counter = 0;
-        for ($x = 0; $x < 5; $x++) {
-            $output .= "<tr><td class=\"calendar-week\">" . $this->monthObj->weekNrArray[$x] . "</td>";
-            for ($i = 0; $i < 7; $i++) {
-                if ($i === 6) {
-                    $redDay = str_replace("<td class=\"", "<td class=\"red", $daysArray[$counter]);
-                    $redDay = str_replace("<td>", "<td class=\"red\">", $daysArray[$counter]);
+        $parentMonth = 1; // Startnr for parent month.
+        $weekNr = $this->monthObj->firstWeekNr;
+        $checkLoop = true; // Used to stop adding weeks.
+        while ($checkLoop) {
+            $output .= "<tr><td class=\"calendar-week\">" . $weekNr . "</td>";
 
+            for ($i = 0; $i < 7; $i++) {
+                if ($counter < count($daysArray)) {
+                    $dayNr = $daysArray[$counter];
+                } else {
+                    $dayNr = "<td class=\"grey\">" . $parentMonth . "</td>";
+                    $parentMonth++;
+                }
+                if ($i === 6) {
+                    $redDay = str_replace("<td>", "<td class=\"red\">", $dayNr);
                     $output .= $redDay;
                 } else {
-                    $output .= $daysArray[$counter];
+                    $output .= $dayNr;
                 }
+
                 $counter++;
+                // Stop generating weeks when array is done.
+                if ($counter == count($daysArray)) {
+                    $checkLoop = false;
+                }
             }
+            $weekNr++;
             $output .= "</tr>";
         }
         $output .= "</table></div>";

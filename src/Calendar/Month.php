@@ -6,7 +6,7 @@ class Month
     public $nrDays;
     public $year;
     public $month;
-    public $weekNrArray = [];
+    public $firstWeekNr;
     public $firstDayOfMonth;
 
 
@@ -22,23 +22,7 @@ class Month
         $this->year = $year;
         $this->month = $month;
         $this->nrDays = cal_days_in_month(CAL_GREGORIAN, $this->month, $this->year);
-        $this->weekNrs();
+        $this->firstWeekNr = date('W', strtotime($this->year . "-" . $this->month . "-01"));
         $this->firstDayOfMonth = date('w', strtotime($this->year . "-" . $this->month . "-01"));
-    }
-
-
-
-    /**
-     * Returns an array with week numbers for the month.
-     * @method weekNrs
-     * @return array  [week numbers]
-     */
-    private function weekNrs()
-    {
-        // Add weeknr to the weeknrarray.
-        $week = date('W', strtotime($this->year . "-" . $this->month . "-01"));
-        for ($x = 0; $x < 5; $x++) {
-            array_push($this->weekNrArray, $week + $x);
-        }
     }
 }

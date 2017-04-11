@@ -49,7 +49,6 @@ $app->router->add("test", function () use ($app) {
 
 $app->router->add("calendar", function () use ($app) {
     $app->view->add("take1/header", ["title" => "Kalender"]);
-    $app->view->add("take1/flash");
     $app->view->add("take1/calendar", [
         "calendar" => new \Peto16\Calendar\Calendar()
     ]);
