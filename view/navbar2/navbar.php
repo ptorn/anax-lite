@@ -23,3 +23,8 @@
             <?= $app->navbar->generateNavbarHTML("mobile-nav-links mobile-links") ?>
     </div>
 </div>
+<?php if ($app->session->get('user')) { ?>
+<div class="logout">
+    <a href="<?= $app->url->create('user/logout') ?>" title="Logout">Logout</a>
+</div>
+<?php } ?>

@@ -39,6 +39,10 @@ return [
                     ],
                 ]
             ]
+        ],
+        "login" => [
+            "text" => "Login",
+            "route" => "user/login",
         ]
     ]
 ];

@@ -50,7 +50,27 @@
                 <p>Tycker det känns bra. Man inser att det går att organisera och sammanställa data på ett smidigt och effektivt sätt. Samtidigt blir det mer påtagligt om jag återkopplar till en tidigare föreläsning där Mikael Roos går in på att var sak ska göra sitt. En halvtaskig programmerare kanske gör ett generellt anrop till databasen och hämtar hem allt och sedan behandlar den data i det språk som man jobbar i istället för att fråga databasen rätt från början så man får det man vill ha som man vill ha det. Smidigare med om man jobbar på större system där kanske databasen ligger på en annan server så man inte belastar exempelvis webbservern för mycket genom att låta den göra allt jobb. Är en god ide att låta databasen jobba lite också.</p>
 
                 <h2>Kmom03</h2>
-                <p>Lite text framöver.</p>
+                <h3>Allmänt:</h3>
+                <p>Ett rätt stort kursmoment avklarat. Kände väl att jag hade kunnat fila lite mer på min kod, men kände att tiden började rinna iväg. Jag skapade min databas från början med fokus på att lösa delarna även för admin biten så jag har endast en databasfil som innehåller allt från början.</p>
+                <p>Jag löste biten med att kunna ha olika nivåer på användarna samt vilka som kan vara administratörer eller ej. Likaså kan man avaktivera login. Som default när man skapar ett konto så sätts man till nivå 1 och kontot är aktiverat. I adminportalen kan man senare för dom som har administratörsrättigheter gå in och redigera rättigheterna och avaktivera konton. Så en användare kan dels vara admin eller vanlig user samtidigt som den kan ha olika nivåer. Har dock inte nyttjat nivån ännu.</p>
+
+                <h3>Hur kändes det att jobba med PHP PDO, SQL och MySQL?</h3>
+                <p>Tycker det känns bra. Vi har redan kikat lite på detta i htmlphp kursen så man hade lite koll på det innan. Smidigt att jobba med prepared statements. Jag skapade en databas klass som jag använder för att kommunicera med databasen genom PDO. Klassen innehåller just hanteringen mellan databasen och ramverket.</p>
+
+                <h3>Reflektera kring koden du skrev för att lösa uppgifterna, klasser, formulär, integration Anax Lite?</h3>
+                <p>Jag skapade en User klass som jag använder för att skapa ett userobjekt som jag använder i olika sammanhang för att ha koll på den inloggade användaren eller skickar med objektet till en vy för att presentera användaren. Jag reflekterade rätt mycket under detta kursmoment och ibland blev jag mest sittandes och funderade på olika strukturer. Jag ville hålla mina klasser så oberoende som möjligt så jag har undvikit att ha kod i mina klasser som gör dom beroende i onödan. Istället så har en del kod hamnat i routerna där jag förberett koden för mina klasser för att just låta klassen sköta och vara vad den är oavsett var data kommer ifrån och var data hamnar.</p>
+                <p>Jag skapade en Databas klass som hanterar uppkopplingen mot databasen och ger mig de nödvändiga kommandona som jag anropar ifrån mina routes. För att mina routes inte skulle bli för stora så skapade jag olika routes för att hantera processen från de olika formulären för att kunna dela upp koden lite.</p>
+                <p>Jag delade upp routerna genom en för users och en för admin. Ville få lite bättre struktur på det hela.
+                Skapade även en funktioner fil som innehåller diverse hjälp funktioner. Skulle nog vilja utnyttja den lite mer för att avlasta mina routes lite vilket jag kommer att göra i framtida kursmoment.</p>
+                <p>Sen skapade jag två vy mappar. En för user och en för admin där jag har skapat olika vyer för att redigera och presentera data.</p>
+                <p>Och jag skapade även en Cookie klass som håller koll på när besökaren var inloggad senast vilket man ser när man loggat in.</p>
+
+                <h3>Känner du dig hemma i ramverket, dess komponenter och struktur?</h3>
+                <p>Tycker jag börjar få hyfsad koll på det. Känner att jag behöver rensa upp lite mer i koden. Speciellt i mina routes som jag kan krympa ner. Tiden har varit knapp denna veckan så jag tar tag i det i nästa kursmoment och rensar upp ytterligare. Man har fått en tydlig bild av hur dom olika delarna i ramverket kommunicerar med varandra och man förstår hur det hela hänger ihop.</p>
+
+                <h3>Hur bedömmer du svårighetsgraden på kursens inledande kursmoment, känner du att du lär dig något/bra saker?</h3>
+                <p>Tycker inte att det har varit för svårt utan det har mest tagit lite tid att göra allting jämfört med tidigare kurser. Samtidigt så lär man ju sig mycket och ju mer kod vi får skriva desto bättre. Är positiv till utmaningarna även om man känner att man får växla upp lite.
+                Vi har lärt oss mycket nyttiga saker. Man har fått en god bild utav hur delarna hänger samman i ett ramverk. Jag har redan sett hur liknande kopplingar hänger samman i andra ramverk så det känns väldigt roligt att man känner igen saker från det vi har lärt oss. Framför allt tänket i hur vi skiljer på logiken och vyerna och har en kontroller som knyter ihop allt.</p>
 
                 <h2>Kmom04</h2>
                 <p>Lite text framöver.</p>

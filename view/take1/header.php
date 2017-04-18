@@ -17,6 +17,7 @@
             <span class="site-logo-text">Peder Tornberg</span>
             <?php include(dirname(__DIR__) . "/navbar2/navbar.php") ?>
             </header>
+
         </div>
     </div>
 </div>

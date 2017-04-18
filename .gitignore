@@ -4,3 +4,4 @@
 /vendor
 /theme/node_modules
 /theme/build
+/config/database.php

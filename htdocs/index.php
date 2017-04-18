@@ -19,6 +19,7 @@ $app->response = new \Anax\Response\Response();
 $app->url      = new \Anax\Url\Url();
 $app->router   = new \Anax\Route\RouterInjectable();
 $app->view     = new \Anax\View\ViewContainer();
+$app->db       = new \Peto16\Database\Database();
 $app->session  = new \Peto16\Session\Session();
 $app->navbar   = new \Peto16\Navbar\Navbar();
 
@@ -33,6 +34,9 @@ $app->view->configure("view.php");
 
 // Update navbar with configuration from navbars config file.
 $app->navbar->configure("navbar.php");
+
+// Update database with config and defaults.
+$app->db->configure("database.php");
 
 // Init the object of the request class.
 $app->request->init();

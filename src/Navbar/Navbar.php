@@ -25,7 +25,6 @@ class Navbar implements
     }
 
 
-
     /**
      * Function to generate list items för the navbar with unlimited submenus.
      * @method generateNavbarList
@@ -36,6 +35,13 @@ class Navbar implements
     {
         $output = $class ? "<ul class=\"" . $class . "\">" : "<ul>";
         foreach ($items as $item) {
+            if ($item['route'] == "user/login") {
+                if ($this->app->session->get('user')) {
+                    $item['route'] = "user";
+                    $item['text'] = "User";
+                }
+            }
+
             $output .= '<li' . $this->isActiveLink($item) . '><a href="' . $this->app->url->create($item["route"]) .
                        '" title="' . $item['text'] . '">' . $item['text'] . '</a>';
             if (isset($item['submenu']) && is_array($item['submenu'])) {

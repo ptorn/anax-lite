@@ -11,7 +11,7 @@
 @fontFamilyCode:      @fontFamilyCourier;
 
 @maxWidth: 960px;
-@bodyBgColor: #111;
+@bodyBgColor: #222;
 @headerBgColor: none;
 @headerLogoText: #eee;
 @fontColor: #fff;
@@ -43,7 +43,8 @@ html.hgrid .inner-wrap {
 }
 
 body {
-    background-image: linear-gradient(to bottom, #29323c, #485563);
+    height: 100%;
+    // background-image: linear-gradient(to bottom, #29323c, #485563);
 
     a {
         text-decoration: underline;
@@ -51,6 +52,11 @@ body {
     }
     code {
         color: #111;
+    }
+}
+@media only screen and (min-width: @maxWidth) {
+    h1.no-flash {
+        margin-top:50px;
     }
 }
 /** --------------------------------------------------------------
@@ -67,10 +73,14 @@ body {
 
 @media only screen and (min-width: @maxWidth) {
     .outer-wrap-header {
+        height: 50px;
         position: fixed;
         z-index: 1;
         width: 100%;
         box-shadow: 0 2px 3px #333;
+    }
+    .outer-wrap-flash {
+        margin-top: 50px;
     }
 }
 
@@ -92,6 +102,31 @@ body {
     }
  }
 
+.logout {
+    position: absolute;
+    right: 0;
+    top: 44px;
+    display: block;
+    background-color: #232526;
+    padding: 0 15px 5px 15px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-bottom-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-bottom-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    z-index: 5;
+    font-size: 0.785em;
+    a {
+        text-decoration: none;
+    }
+}
+@media only screen and (min-width: @maxWidth) {
+    .logout {
+        top: 50px;
+    }
+
+}
 /** --------------------------------------------------------------
  *  Wrapper
  */
@@ -102,11 +137,16 @@ body {
 .outer-wrap-header {
     // background-image: linear-gradient(to bottom, #888, #666);
     background-image: linear-gradient(to top, #232526, #414345);
-
 }
+
 
 .route-typography .outer-wrap-main {
     background-image: url("../img/grid/horisontal-grid-22-white.png");
+}
+
+.outer-wrap-main {
+    background-image: linear-gradient(to bottom, #29323c, #485563);
+    padding-bottom: 50px;
 }
 
 .outer-wrap-after-main {
@@ -129,7 +169,7 @@ body {
 }
 
 .outer-wrap-footer {
-    background-image: linear-gradient(to bottom, #333, #111);
+    background-image: linear-gradient(to bottom, #333, #222);
 }
 
 .byline {
@@ -196,6 +236,51 @@ body {
     }
 
 }
+
+// login
+.user {
+    .input label {
+        display: block;
+    }
+    button {
+        float: left;
+        margin-top: @magicNumber;
+    }
+}
+
+.user-login {
+
+    input {
+        width: 242px;
+    }
+
+}
+
+// administrator
+.admin-search {
+    .input {
+        display: inline-block;
+    }
+}
+
+.password-box {
+    margin-top: @magicNumber*2;
+}
+
+.button-create,
+.button-create-back {
+    margin-top: @magicNumber;
+    margin-left: @magicNumber;
+    display: inline-block;
+}
+
+.button-edit,
+.button-password,
+.button-admin {
+    display: inline-block;
+    margin-right: @magicNumber;
+}
+
 
 // Session
 .session-button {
