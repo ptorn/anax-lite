@@ -10,9 +10,9 @@ $app->router->add("user/login", function () use ($app) {
     $user = new \Peto16\User\User();
     if ($username && $password) {
         $app->db->connect();
-        $dbUser = $app->db->executeFetchAll("SELECT * FROM Users WHERE username=?", [$username])[0];
-        if ($dbUser) {
-            $user->setUserData($dbUser);
+        $dbUser = $app->db->executeFetchAll("SELECT * FROM Users WHERE username=?", [$username]);
+        if (!empty($dbUser)) {
+            $user->setUserData($dbUser[0]);
             $status = $user->loginUser($password) ?: "Fel användaruppgifter!";
         } else {
             $status = "Fel användaruppgifter";
