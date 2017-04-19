@@ -139,7 +139,19 @@ $app->router->add("user/edit/password", function () use ($app) {
     if (!isLoggedInAndActive($app)) {
         $app->response->redirect($app->url->create("user/login"));
     }
-    $error = getGet('error') && getGet('error') == 1 ? "Lösenorden matchar inte!" : false;
+    $errorCode = getGet('error');
+
+    switch ($errorCode) {
+        case 1:
+            $error = "Lösenorden matchar inte!";
+            break;
+        case 2:
+            $error = "Lösenorden är tomma!";
+            break;
+        default:
+            $error = false;
+            break;
+    }
     $app->view->add("take1/header", ["title" => "Ändra lösenord"]);
     $app->view->add("take1/flash", [
         "img" => "img/security.jpg"
@@ -158,12 +170,14 @@ $app->router->add("user/edit/password/process", function () use ($app) {
     $password = getPost('password');
     $password2 = getPost('password2');
     $user = $app->session->get("user");
-    if ($password == $password2) {
+    if ($password == $password2 && $password != "") {
         $app->db->connect();
         $query = "UPDATE Users SET password = ? WHERE username = ?;";
         if ($app->db->editData($query, [password_hash($password, PASSWORD_DEFAULT), $user->username])) {
             $app->response->redirect($app->url->create("user"));
         }
+    } elseif ($password != "") {
+        $app->response->redirect($app->url->create("user/edit/password?error=2"));
     } else {
         $app->response->redirect($app->url->create("user/edit/password?error=1"));
     }

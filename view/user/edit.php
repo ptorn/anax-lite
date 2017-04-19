@@ -24,7 +24,10 @@
                         <input type="text" name="email" value="<?= $user->email ?>">
                     </div>
                     <button type="submit" name="button">Uppdatera</button>
-
+                </form>
+                <div class="button-create-back">
+                    <a href="<?= $app->url->create('user') ?>"><button name="button">Tillbaka</button></a>
+                </div>
             </main>
         </div>
     </div>
