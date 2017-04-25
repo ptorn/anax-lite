@@ -73,7 +73,25 @@
                 Vi har lärt oss mycket nyttiga saker. Man har fått en god bild utav hur delarna hänger samman i ett ramverk. Jag har redan sett hur liknande kopplingar hänger samman i andra ramverk så det känns väldigt roligt att man känner igen saker från det vi har lärt oss. Framför allt tänket i hur vi skiljer på logiken och vyerna och har en kontroller som knyter ihop allt.</p>
 
                 <h2>Kmom04</h2>
-                <p>Lite text framöver.</p>
+                <h3>Allmänt:</h3>
+                <p>Jag har ändrat lösenord till admin/admin och doe/doe</p>
+
+                <h3>Finns något att säga kring din klass för texfilter, eller rent allmänt om formattering och filtrering av text som sparas i databasen av användaren?</h3>
+                <p>Jag har strukturerat min textfilter med funktioner för att formatera texten när den kommer från databasen enligt de filter som skickas med utav användaren som skapat innehållet. Jag valde att skapa en funktion som jag först kör striped tags på sedan så lägger jag på övriga filter. Eftersom sidan är såpass öppen just nu så känns det bäst att göra på detta sättet. Texten sparas i databasen helt oförändrar. Texten används oförändrad och jag kör först filtrena och funktionen med strip_tags innan jag skriver ut data som text/HTML på sidan. När jag fyller i formulären vid edit så kör jag också en htmlenteties på texten innan den skrivs ut.</p>
+
+                <h3>Berätta hur du tänkte när du strukturerade klasserna och databasen för webbsidor och bloggposter?</h3>
+                <p>För detta steg så körde jag på samma upplägg som i övningen då den hade bra stöd för det jag ville ha. Sen skapade jag en modul Content med en klass Content som speglar fälten i databasen där jag lagrar min data. Det som skiljer innehållet åt är endast type som avgör om det är en blogg/page eller ett block. Jag har skapat metoder för att kolla så man kan kolla vilka typer det är och om dom är publicerade eller ej.</p>
+
+                <h3>Förklara vilka routes som används för att demonstrera funktionaliteten för webbsidor och blogg (så att en utomstående kan testa).</h3>
+                <p>Alla sidor(page) hamnar under domain/page/sen-sidans-slug likaså blogginlägg hamnar här domain/blog/blogg-slug</p>
+                <p>Jag har även lagt till länkar i min navbar för att visa dom olika typerna. Jag har lagt texten i min footer som ett block.</p>
+
+                <h3>Hur känns det att dokumentera databasen så här i efterhand?</h3>
+                <p>Det var inga konstigheter. Det gick rätt smidigt att få fram den informationen som eftersöktes. Jag har sparat filerna i min kmom04 mapp under mappen er1.</p>
+
+                <h3>Om du är självkritisk till koden du skriver i Anax Lite, ser du förbättringspotential och möjligheter till alternativ struktur av din kod?</h3>
+                <p>Det ser jag hela tiden. Jag har ändrat om lite så mina routes och hur jag lagrar mina views matchar för att göra det mer logiskt och tydligt. Tex så följer det administration/user eller administration/content. Men överlag så finns det mycket mer man vill förbättra, men känner att det inte har funnits så mycket tid att gå igenom och förbättre min kod under detta kursmoment.</p>
+
 
                 <h2>Kmom05</h2>
                 <p>Lite text framöver.</p>
