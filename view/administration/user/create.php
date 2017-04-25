@@ -6,7 +6,7 @@
                 <h1>Skapa användare</h1>
                 <p><?= $error ?></p>
 
-                <form class="user-create user" action="create/process" method="post">
+                <form class="user-create user form" action="create/process" method="post">
                     <div class="input">
                         <label><b>Användarnamn</b></label>
                         <input type="text" name="username" value="">
@@ -27,12 +27,16 @@
                         <label><b>Lösenord</b></label>
                         <input type="password" name="password" value="">
                     </div>
-                    <button type="submit" name="button">Lägg till</button>
-
+                    <div class="button-form">
+                        <button type="submit" name="button">Lägg till</button>
+                    </div>
+                    <div class="button-form">
+                        <input type="reset">
+                    </div>
 
                 </form>
-                <div class="button-create-back">
-                    <a href="<?= $app->url->create('user') ?>"><button name="button">Tillbaka</button></a>
+                <div class="button-form">
+                    <a href="<?= $app->url->create('administration/user') ?>"><button name="button">Tillbaka</button></a>
                 </div>
             </main>
         </div>

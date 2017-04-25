@@ -58,6 +58,16 @@ $app->router->add("calendar", function () use ($app) {
               ->send();
 });
 
+$app->router->add("filter", function () use ($app) {
+    $app->view->add("take1/header", ["title" => "Filter"]);
+    $app->view->add("take1/flash");
+    $app->view->add("take1/filter");
+    $app->view->add("take1/byline");
+    $app->view->add("take1/footer");
+    $app->response->setBody([$app->view, "render"])
+              ->send();
+});
+
 $app->router->add("status", function () use ($app) {
     $data = [
         "Server" => php_uname(),

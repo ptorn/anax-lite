@@ -3,10 +3,13 @@
 /**
  * Routes.
  */
-$app->router->add("admin", function () use ($app) {
+$app->router->add("administration/user/admin/**", function () use ($app) {
     if (!isLoggedInAndActiveAdmin($app)) {
-        $app->response->redirect($app->url->create("user/login"));
+        $app->redirect("login");
     }
+});
+
+$app->router->add("administration/user/admin", function () use ($app) {
     $app->db->connect();
     $columns = ["firstname", "lastname", "username", "email"];
     $route = getGet('route');
@@ -18,10 +21,10 @@ $app->router->add("admin", function () use ($app) {
                 array_push($searchQuery, $column . " LIKE '%" . $keyword . "%'");
             }
             $where = implode(' OR ', $searchQuery);
-            $query = "SELECT * FROM Users WHERE $where";
+            $query = "SELECT * FROM anaxlite_users WHERE $where";
             break;
         default:
-            $query = "SELECT * FROM Users";
+            $query = "SELECT * FROM anaxlite_users";
             break;
     }
     $orderBy = getGet('orderby') ?: "id";
@@ -40,7 +43,7 @@ $app->router->add("admin", function () use ($app) {
     if (!(is_numeric($hits) && $hits > 0 && $hits <= 8)) {
         die("Not valid for hits.");
     }
-    $sql = "SELECT COUNT(id) AS max FROM Users;";
+    $sql = "SELECT COUNT(id) AS max FROM anaxlite_users;";
     $max = $app->db->executeFetchAll($sql);
     $max = ceil($max[0]->max / $hits);
 
@@ -58,7 +61,7 @@ $app->router->add("admin", function () use ($app) {
     $app->view->add("take1/flash", [
         "img" => "img/security.jpg"
     ]);
-    $app->view->add("admin/admin", [
+    $app->view->add("administration/user/admin/admin", [
         "users" => $users,
         "user"  => $app->session->get("user"),
         "max"   => $max
@@ -70,33 +73,27 @@ $app->router->add("admin", function () use ($app) {
 });
 
 
-$app->router->add("admin/delete", function () use ($app) {
-    if (!isLoggedInAndActiveAdmin($app)) {
-        $app->response->redirect($app->url->create("user/login"));
-    }
+$app->router->add("administration/user/admin/delete", function () use ($app) {
     if (getGet('id')) {
         $app->db->connect();
-        $query = "DELETE FROM Users WHERE id = ?;";
+        $query = "DELETE FROM anaxlite_users WHERE id = ?;";
         $app->db->execute($query, $_GET['id']);
     }
-    $app->response->redirect($app->url->create("admin"));
+    $app->redirect("administration/user/admin");
 });
 
 
-$app->router->add("admin/edit", function () use ($app) {
-    if (!isLoggedInAndActiveAdmin($app)) {
-        $app->response->redirect($app->url->create("user/login"));
-    }
+$app->router->add("administration/user/admin/edit", function () use ($app) {
     if (getGet('id')) {
         $app->db->connect();
-        $query = $query = "SELECT * FROM Users WHERE id = ?;";
+        $query = $query = "SELECT * FROM anaxlite_users WHERE id = ?;";
         $user = $app->db->executeFetchAll($query, $_GET['id']);
     }
     $app->view->add("take1/header", ["title" => "Admin redigera"]);
     $app->view->add("take1/flash", [
         "img" => "img/security.jpg"
     ]);
-    $app->view->add("admin/edit", [
+    $app->view->add("administration/user/admin/edit", [
         "user"  => $user[0]
     ]);
     $app->view->add("take1/byline");
@@ -106,31 +103,56 @@ $app->router->add("admin/edit", function () use ($app) {
 });
 
 
-$app->router->add("admin/edit/process", function () use ($app) {
-    $param = [
-        $firstname = getPost('firstname'),
-        $lastname = getPost('lastname'),
-        $email = getPost('email'),
-        $level = getPost('level'),
-        $administrator = getPost('administrator') ? getPost('administrator') == "on" ? true : false : false,
-        $enabled = getPost('enabled') ? getPost('enabled') == "on" ? true : false : false,
-        $id = getPost('id')
-    ];
+$app->router->add("administration/user/admin/edit/process", function () use ($app) {
+    $firstname = getPost('firstname');
+    $lastname = getPost('lastname');
+    $email = getPost('email');
+    $level = getPost('level');
+    $administrator = getPost('administrator') ? getPost('administrator') == "on" ? true : false : false;
+    $enabled = getPost('enabled') ? getPost('enabled') == "on" ? true : false : false;
+    $id = getPost('id');
+    $password = getPost('password');
+    $password2 = getPost('password2');
+
+    if ($password == $password2 && $password != "") {
+        $param = [
+            $firstname,
+            $lastname,
+            $email,
+            $level,
+            $administrator,
+            $enabled,
+            password_hash($password, PASSWORD_DEFAULT),
+            $id
+        ];
+        $query = "UPDATE anaxlite_users SET firstname = ?, lastname = ?, email = ?, level = ?, administrator = ?, enabled = ?, password = ? WHERE id = ?;";
+    } else {
+        $param = [
+            $firstname,
+            $lastname,
+            $email,
+            $level,
+            $administrator,
+            $enabled,
+            $id
+        ];
+        $query = "UPDATE anaxlite_users SET firstname = ?, lastname = ?, email = ?, level = ?, administrator = ?, enabled = ? WHERE id = ?;";
+    }
+
     $app->db->connect();
-    $query = "UPDATE Users SET firstname = ?, lastname = ?, email = ?, level = ?, administrator = ?, enabled = ? WHERE id = ?;";
     if ($app->db->editData($query, $param)) {
-        $app->response->redirect($app->url->create("admin"));
+        $app->redirect("administration/user/admin");
     }
 });
 
 
-$app->router->add("admin/create", function () use ($app) {
+$app->router->add("administration/user/admin/create", function () use ($app) {
     $error = getGet('error') && getGet('error') == 1 ? "Användaren är redan tagen!" : false;
     $app->view->add("take1/header", ["title" => "Admin skapa användare"]);
     $app->view->add("take1/flash", [
         "img" => "img/security.jpg"
     ]);
-    $app->view->add("admin/create", [
+    $app->view->add("administration/user/admin/create", [
         "error" => $error
     ]);
     $app->view->add("take1/byline");
@@ -140,7 +162,7 @@ $app->router->add("admin/create", function () use ($app) {
 });
 
 
-$app->router->add("admin/create/process", function () use ($app) {
+$app->router->add("administration/user/admin/create/process", function () use ($app) {
     $param = [
         $username = getPost('username'),
         $firstname = getPost('firstname'),
@@ -151,15 +173,15 @@ $app->router->add("admin/create/process", function () use ($app) {
         $password = getPost('password') ? password_hash(getPost('password'), PASSWORD_DEFAULT) : false
     ];
     $app->db->connect();
-    $query = "SELECT * FROM Users WHERE username=?;";
+    $query = "SELECT * FROM anaxlite_users WHERE username=?;";
     if ($app->db->dataExcist($query, $param[0])) {
-        $app->response->redirect($app->url->create("admin/create?error=1"));
+        $app->redirect("administration/user/admin/create?error=1");
     } else {
-        $query = "INSERT INTO Users(username, firstname, lastname, email, administrator, enabled, password) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        $query = "INSERT INTO anaxlite_users(username, firstname, lastname, email, administrator, enabled, password) VALUES (?, ?, ?, ?, ?, ?, ?);";
         if ($app->db->addData($query, $param)) {
-            $app->response->redirect($app->url->create("admin"));
+            $app->redirect("administration/user/admin");
         } else {
-            $app->response->redirect($app->url->create("admin/create?error=1"));
+            $app->redirect("administration/user/admin/create?error=1");
         };
     }
 });

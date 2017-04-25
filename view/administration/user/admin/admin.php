@@ -3,14 +3,14 @@ $defaultRoute = "admin?";
 $output = "";
 for ($x = 0; $x < count($users); $x++) {
     $output .= "<tr>";
-    $output .= "<td>" . $users[$x]->id . "</td>";
-    $output .= "<td>" . $users[$x]->username . "</td>";
-    $output .= "<td>" . $users[$x]->firstname . "</td>";
-    $output .= "<td>" . $users[$x]->lastname . "</td>";
-    $output .= "<td>" . $users[$x]->email . "</td>";
-    $output .= "<td>" . $users[$x]->level . "</td>";
-    $output .= "<td>" . $users[$x]->administrator . "</td>";
-    $output .= "<td>" . $users[$x]->enabled . "</td>";
+    $output .= "<td>" . esc($users[$x]->id) . "</td>";
+    $output .= "<td>" . esc($users[$x]->username) . "</td>";
+    $output .= "<td>" . esc($users[$x]->firstname) . "</td>";
+    $output .= "<td>" . esc($users[$x]->lastname) . "</td>";
+    $output .= "<td>" . esc($users[$x]->email) . "</td>";
+    $output .= "<td>" . esc($users[$x]->level) . "</td>";
+    $output .= "<td>" . esc($users[$x]->administrator) . "</td>";
+    $output .= "<td>" . esc($users[$x]->enabled) . "</td>";
     $output .= "<td><a href=\"admin/edit?id=" . $users[$x]->id . "\"><i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></i>
 </a></td>";
     $output .= "<td><a href=\"admin/delete?id=" . $users[$x]->id . "\"><i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a></td>";
@@ -24,13 +24,13 @@ for ($x = 0; $x < count($users); $x++) {
         <div class="row">
             <main class="main">
                 <h1>Adminportal:</h1>
-                <h2>Välkommen <?= $user->getFullName() ?></h2>
+                <h2>Välkommen <?= esc($user->getFullName()) ?></h2>
                 <form class="admin-search" action="admin" method="get">
                     <div class="input">
                         <label><b>Sök</b></label>
                         <input type="hidden" name="route" value="search">
 
-                        <input type="text" name="keyword" value="<?= htmlentities(getGet('keyword')) ?>">
+                        <input type="text" name="keyword" value="<?= esc(getGet('keyword')) ?>">
                     </div>
                     <button type="submit">Sök</button>
                 </form>
@@ -61,10 +61,10 @@ for ($x = 0; $x < count($users); $x++) {
                     <?php endfor; ?>
                 </p>
                 <div class="button-admin">
-                    <a href="<?= $app->url->create('user') ?>"><button name="button">Användarportal</button></a>
+                    <a href="<?= $app->url->create('administration/user') ?>"><button name="button">Användarportal</button></a>
                 </div>
                 <div class="button-admin">
-                    <a href="<?= $app->url->create('admin/create') ?>">
+                    <a href="<?= $app->url->create('administration/user/admin/create') ?>">
                         <button name="button">Lägg till användare</button>
                     </a>
                 </div>

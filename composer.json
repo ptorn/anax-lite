@@ -15,7 +15,8 @@
         "anax/response": "^1.0",
         "anax/view": "^1.0",
         "mos/cimage": "^0.7.18",
-        "anax/database": "^1.0"
+        "anax/database": "^1.0",
+        "michelf/php-markdown": "^1.7"
     },
     "autoload": {
         "psr-4": {"Peto16\\": "src/"},

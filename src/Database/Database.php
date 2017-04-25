@@ -96,6 +96,12 @@ class Database implements \Anax\Common\ConfigureInterface
         return $this->stmt->fetch();
     }
 
+    public function executeFetch($query, $param)
+    {
+        $this->execute($query, $param);
+        return $this->stmt->fetch();
+    }
+
     public function dataExcist($query, $username)
     {
         $this->execute($query, [$username]);

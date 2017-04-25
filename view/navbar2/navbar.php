@@ -25,6 +25,6 @@
 </div>
 <?php if ($app->session->get('user')) { ?>
 <div class="logout">
-    <a href="<?= $app->url->create('user/logout') ?>" title="Logout">Logout</a>
+    <a href="<?= $app->url->create('administration/user/logout') ?>" title="Logout">Logga Ut</a>
 </div>
 <?php } ?>

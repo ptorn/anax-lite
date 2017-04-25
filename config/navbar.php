@@ -12,37 +12,45 @@ return [
             "text" => "Om",
             "route" => "about",
         ],
-        "session" => [
-            "text" => "Session",
-            "route" => "session",
-        ],
-        "calendar" => [
-            "text" => "Kalender",
-            "route" => "calendar",
-        ],
         "report" => [
             "text" => "Redovisning",
             "route" => "report",
         ],
-        "test" => [
-            "text" => "Test",
-            "route" => "test",
+        "uppgifter" => [
+            "text" => "Uppgifter",
+            "route" => "#",
             "submenu" => [
                 "items" => [
-                    "test2" => [
-                        "text" => "Test2",
+                    "calendar" => [
+                        "text" => "Kalender",
+                        "route" => "calendar",
+                    ],
+                    "session" => [
+                        "text" => "Session",
+                        "route" => "session",
+                    ],
+                    "filter" => [
+                        "text" => "TestFilter",
+                        "route" => "filter",
+                    ],
+                    "test" => [
+                        "text" => "Test",
                         "route" => "test",
                     ],
-                    "test3" => [
-                        "text" => "Test3",
-                        "route" => "test",
+                    "page" => [
+                        "text" => "Sida",
+                        "route" => "page/testsida-med-slug",
+                    ],
+                    "blogpost" => [
+                        "text" => "Bloggpost",
+                        "route" => "blog/en-bloggpost-som-exempel",
                     ],
                 ]
             ]
         ],
         "login" => [
             "text" => "Login",
-            "route" => "user/login",
+            "route" => "login",
         ]
     ]
 ];

@@ -3,42 +3,38 @@
     <div class="inner-wrap inner-wrap-main">
         <div class="row">
             <main class="main">
-                <h1>Redigera användare:</h1>
-                <h2><?= $user->username ?></h2>
-                <p>
-                <form class="admin-edit user" action="edit/process" method="post">
-                    <div class="input">
-                        <label><b>Id: <?= $user->id ?></b></label>
-                        <input type="hidden" name="id" value="<?= $user->id ?>">
-                    </div>
+                <h1>Skapa användare</h1>
+                <p><?= $error ?></p>
+
+                <form class="admin-edit user form" action="create/process" method="post">
                     <div class="input">
                         <label><b>Användarnamn</b></label>
-                        <input type="text" name="username" value="<?= $user->username ?>" disabled>
+                        <input type="text" name="username" value="">
                     </div>
                     <div class="input">
                         <label><b>Förnamn</b></label>
-                        <input type="text" name="firstname" value="<?= $user->firstname ?>">
+                        <input type="text" name="firstname" value="">
                     </div>
                     <div class="input">
                         <label><b>Efternamn</b></label>
-                        <input type="text" name="lastname" value="<?= $user->lastname ?>">
+                        <input type="text" name="lastname" value="">
                     </div>
                     <div class="input">
                         <label><b>Epost</b></label>
-                        <input type="text" name="email" value="<?= $user->email ?>">
+                        <input type="text" name="email" value="">
                     </div>
                     <div class="input">
                         <label><b>Level</b></label>
-                        <input type="text" name="level" value="<?= $user->level ?>">
+                        <input type="text" name="level" value="">
                     </div>
                     <div class="input">
                         <label><b>Administrator</b></label>
 
-                        <input type="checkbox" name="administrator" <?= $user->administrator ? "checked" : "" ?>>
+                        <input type="checkbox" name="administrator">
                     </div>
                     <div class="input">
                         <label><b>Aktiverad</b></label>
-                        <input type="checkbox" name="enabled" <?= $user->enabled ? "checked" : "" ?>>
+                        <input type="checkbox" name="enabled">
                     </div>
                     <div class="password-box">
                         <div class="input">
@@ -50,9 +46,17 @@
                             <input type="password" name="password2" value="">
                         </div>
                     </div>
+                    <div class="button-form">
+                        <button type="submit">Lägg till</button>
+                    </div>
+                    <div class="button-form">
+                        <input type="reset">
+                    </div>
 
-                    <button type="submit">Uppdatera</button>
-
+                </form>
+                <div class="button-form">
+                    <a href="<?= $app->url->create('administration/user/admin') ?>"><button name="button">Tillbaka</button></a>
+                </div>
             </main>
         </div>
     </div>

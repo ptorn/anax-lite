@@ -1,0 +1,135 @@
+<?php
+
+namespace Peto16\Textfilter;
+
+class Textfilter
+{
+    /**
+     * Formats a text string with given format in a comma seperated string.
+     * @method formatToHtml
+     * @param  string       $text   The text that is beeing formated.
+     * @param  string       $format Comma seperated list of formats to run.
+     * @return string               The formated string.
+     */
+    public function formatToHtml($text, $format)
+    {
+        $formatArray = explode(',', $format);
+        $textFormated = "";
+        foreach ($formatArray as $form) {
+            switch ($form) {
+                case 'nl2br':
+                    $textFormated = $this->nl2br($text);
+                    break;
+                case 'bbcode':
+                    $textFormated = $this->bbcode2html($text);
+                    break;
+                case 'link':
+                    $textFormated = $this->makeClickable($text);
+                    break;
+                case 'markdown':
+                    $textFormated = $this->markdown($text);
+                    break;
+                case 'esc':
+                    $textFormated = $this->esc($text);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return $textFormated;
+    }
+
+
+    public function formatToHtmlStrip($text, $format)
+    {
+        return $this->formatToHtml(strip_tags($text), $format);
+    }
+
+    /**
+    * Helper, BBCode formatting converting to HTML.
+    *
+    * @param string text The text to be converted.
+    * @returns string the formatted text.
+    */
+    private function bbcode2html($text)
+    {
+        $search = array(
+            '/\[b\](.*?)\[\/b\]/is',
+            '/\[i\](.*?)\[\/i\]/is',
+            '/\[u\](.*?)\[\/u\]/is',
+            '/\[img\](https?.*?)\[\/img\]/is',
+            '/\[url\](https?.*?)\[\/url\]/is',
+            '/\[url=(https?.*?)\](.*?)\[\/url\]/is'
+        );
+        $replace = array(
+            '<strong>$1</strong>',
+            '<em>$1</em>',
+            '<u>$1</u>',
+            '<img src="$1" />',
+            '<a href="$1">$1</a>',
+            '<a href="$1">$2</a>'
+        );
+        return preg_replace($search, $replace, $text);
+    }
+
+
+
+    /**
+    * Make clickable links from URLs in text.
+    *
+    * @param string $text the text that should be formatted.
+    * @return string with formatted anchors.
+    */
+    private function makeClickable($text)
+    {
+        return preg_replace_callback(
+            '#\b(?<![href|src]=[\'"])https?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#',
+            create_function(
+                '$matches',
+                'return "<a href=\'{$matches[0]}\'>{$matches[0]}</a>";'
+            ),
+            $text
+        );
+    }
+
+
+
+    /**
+    * Helper, Markdown formatting converting to HTML.
+    *
+    * @param string text The text to be converted.
+    *
+    * @return string the formatted text.
+    */
+    private function markdown($text)
+    {
+        $markdownInstance = new \Michelf\Markdown();
+        return $markdownInstance->defaultTransform($text);
+    }
+
+
+
+    /**
+     * Convert new lines to <br>
+     * @method nl2br
+     * @param  string $htmltext Text to be filtered
+     * @return string           Filtered text.
+     */
+    private function nl2br($htmltext)
+    {
+        return nl2br($htmltext, false);
+    }
+
+
+
+    /**
+     * Clean data before output with htmlentities.
+     * @method esc
+     * @param  string $text Text to be filtered.
+     * @return [type]       Filtered text.
+     */
+    private function esc($text)
+    {
+        return htmlentities($text);
+    }
+}

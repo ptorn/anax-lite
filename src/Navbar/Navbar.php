@@ -35,9 +35,9 @@ class Navbar implements
     {
         $output = $class ? "<ul class=\"" . $class . "\">" : "<ul>";
         foreach ($items as $item) {
-            if ($item['route'] == "user/login") {
+            if ($item['route'] == "login") {
                 if ($this->app->session->get('user')) {
-                    $item['route'] = "user";
+                    $item['route'] = "administration/user";
                     $item['text'] = "User";
                 }
             }

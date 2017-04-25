@@ -46,9 +46,21 @@ function getGet($key, $default = null)
  */
 function getPost($key, $default = null)
 {
+    if (is_array($key)) {
+        $key = array_flip($key);
+        return array_replace($key, array_intersect_key($_POST, $key));
+    }
+
     return isset($_POST[$key])
         ? $_POST[$key]
         : $default;
+}
+
+
+
+function hasKeyPost($key)
+{
+    return isset($_POST[$key]) ? true : false;
 }
 
 
@@ -96,4 +108,29 @@ function mergeQueryString($options, $prepend = "?")
 
     // Build and return the modified querystring as url
     return $prepend . http_build_query($query);
+}
+
+
+
+function esc($text)
+{
+    return htmlentities($text);
+}
+
+
+
+/**
+ * Create a slug of a string, to be used as url.
+ *
+ * @param string $str the string to format as slug.
+ *
+ * @return str the formatted slug.
+ */
+function slugify($str)
+{
+    $str = mb_strtolower(trim($str));
+    $str = str_replace(array('å','ä','ö'), array('a','a','o'), $str);
+    $str = preg_replace('/[^a-z0-9-]/', '-', $str);
+    $str = trim(preg_replace('/-+/', '-', $str), '-');
+    return $str;
 }

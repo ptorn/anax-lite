@@ -13,15 +13,17 @@ require ANAX_INSTALL_PATH . "/config/error_reporting.php";
 require ANAX_INSTALL_PATH . "/vendor/autoload.php";
 
 // Add all resources to $app
-$app = new \Peto16\App\App();
-$app->request  = new \Anax\Request\Request();
-$app->response = new \Anax\Response\Response();
-$app->url      = new \Anax\Url\Url();
-$app->router   = new \Anax\Route\RouterInjectable();
-$app->view     = new \Anax\View\ViewContainer();
-$app->db       = new \Peto16\Database\Database();
-$app->session  = new \Peto16\Session\Session();
-$app->navbar   = new \Peto16\Navbar\Navbar();
+$app                = new \Peto16\App\App();
+$app->request       = new \Anax\Request\Request();
+$app->response      = new \Anax\Response\Response();
+$app->url           = new \Anax\Url\Url();
+$app->router        = new \Anax\Route\RouterInjectable();
+$app->view          = new \Anax\View\ViewContainer();
+$app->db            = new \Peto16\Database\Database();
+$app->session       = new \Peto16\Session\Session();
+$app->navbar        = new \Peto16\Navbar\Navbar();
+$app->textfilter    = new \Peto16\Textfilter\Textfilter();
+
 
 // Inject $app into the view container for use in view files.
 $app->view->setApp($app);
