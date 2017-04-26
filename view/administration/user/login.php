@@ -19,7 +19,7 @@
                     </div>
                 </form>
                 <div class="button-form">
-                    <a href="<?= $app->url->create('administration/user/create') ?>"><button name="button">Skapa konto</button></a>
+                    <a href="<?= $app->url->create('administration/create') ?>"><button name="button">Skapa konto</button></a>
                 </div>
             </main>
         </div>
