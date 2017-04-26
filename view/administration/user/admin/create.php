@@ -25,7 +25,11 @@
                     </div>
                     <div class="input">
                         <label><b>Level</b></label>
-                        <input type="text" name="level" value="">
+                        <select name="level">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
                     </div>
                     <div class="input">
                         <label><b>Administrator</b></label>

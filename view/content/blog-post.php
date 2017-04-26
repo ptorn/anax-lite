@@ -4,9 +4,9 @@
         <div class="row">
             <main class="main">
                 <header>
-                    <h1><?= $app->textfilter->formatToHtmlStrip($content->title, $content->filter) ?></h1>
+                    <h1><?= esc($content->title) ?></h1>
                     <p class="meta-header">
-                        Publicerad: <time datetime="<?= $content->published ?>" pubdate="<?= $content->published ?>"><?= $content->published ?></time>.
+                        Publicerad: <time datetime="<?= esc($content->published) ?>" pubdate="<?= esc($content->published) ?>"><?= esc($content->published) ?></time>.
                     </p>
                 </header>
                 <article class="article blog-post">

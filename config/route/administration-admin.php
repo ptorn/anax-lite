@@ -108,8 +108,8 @@ $app->router->add("administration/user/admin/edit/process", function () use ($ap
     $lastname = getPost('lastname');
     $email = getPost('email');
     $level = getPost('level');
-    $administrator = getPost('administrator') ? getPost('administrator') == "on" ? true : false : false;
-    $enabled = getPost('enabled') ? getPost('enabled') == "on" ? true : false : false;
+    $administrator = getPost('administrator') ? getPost('administrator') == "on" ? 1 : 0 : 0;
+    $enabled = getPost('enabled') ? getPost('enabled') == "on" ? 1 : 0 : 0;
     $id = getPost('id');
     $password = getPost('password');
     $password2 = getPost('password2');
@@ -168,8 +168,8 @@ $app->router->add("administration/user/admin/create/process", function () use ($
         $firstname = getPost('firstname'),
         $lastname = getPost('lastname'),
         $email = getPost('email'),
-        $administrator = getPost('administrator') ?: 0,
-        $enabled = getPost('enabled') ?: 1,
+        $administrator = getPost('administrator') ? getPost('administrator') == "on" ? true : false : false,
+        $enabled = getPost('enabled') ? getPost('enabled') == "on" ? 1 : 0 : 0,
         $password = getPost('password') ? password_hash(getPost('password'), PASSWORD_DEFAULT) : false
     ];
     $app->db->connect();
