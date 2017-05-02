@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Check if user is logged in and that account is active.
+ * @method isLoggedInAndActive
+ * @param  Obj              $app The framework
+ * @return boolean          Return true if user is logged in and active. Else false.
+ */
 function isLoggedInAndActive($app)
 {
     if ($app->session->get("user") && $app->session->get("user")->enabled == 1) {
@@ -9,6 +15,13 @@ function isLoggedInAndActive($app)
 }
 
 
+
+/**
+ * Check is user is logged in and activ and admin.
+ * @method isLoggedInAndActiveAdmin
+ * @param  Obj                   $app framework
+ * @return boolean               Return true if user is logged in and active and admin, else false.
+ */
 function isLoggedInAndActiveAdmin($app)
 {
     if ($app->session->get("user") &&
@@ -17,6 +30,7 @@ function isLoggedInAndActiveAdmin($app)
     }
     return false;
 }
+
 
 
 /**
@@ -58,10 +72,17 @@ function getPost($key, $default = null)
 
 
 
+/**
+ * Check if key excist in post array.
+ * @method hasKeyPost
+ * @param  string     $key Keyname to search for.
+ * @return boolean         True if found, false if not.
+ */
 function hasKeyPost($key)
 {
     return isset($_POST[$key]) ? true : false;
 }
+
 
 
 /**
@@ -112,6 +133,12 @@ function mergeQueryString($options, $prepend = "?")
 
 
 
+/**
+ * Clean with htmlenteties.
+ * @method esc
+ * @param  string $text String to clean.
+ * @return string       String that is cleaned.
+ */
 function esc($text)
 {
     return htmlentities($text);

@@ -1,6 +1,10 @@
 <?php
 namespace Peto16\Calendar;
 
+/**
+ * Class to handle the Month in a year
+ *
+ */
 class Month
 {
     public $nrDays;

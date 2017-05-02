@@ -17,7 +17,7 @@
                     </p>
 
                     <p>
-                        <button type="submit" name="doDelete"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                        <button type="submit" name="doDelete"><i class="fa fa-trash-o" aria-hidden="true"></i> Radera</button>
                     </p>
                     </fieldset>
                 </form>

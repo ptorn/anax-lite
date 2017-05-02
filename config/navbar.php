@@ -45,6 +45,10 @@ return [
                         "text" => "Bloggpost",
                         "route" => "blog/en-bloggpost-som-exempel",
                     ],
+                    "webshop" => [
+                        "text" => "Webshop",
+                        "route" => "administration/webshop",
+                    ],
                 ]
             ]
         ],

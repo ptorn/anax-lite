@@ -1,6 +1,10 @@
 <?php
 namespace Peto16\Cookie;
 
+/**
+ * Cookie class
+ *
+ */
 class Cookie
 {
     private $expire;
@@ -15,6 +19,8 @@ class Cookie
         $this->expire = time() + $time;
     }
 
+
+
     /**
      * Check if key exists in $_COOKIE
      * @param $key string The key to check for in $_COOKIE
@@ -24,6 +30,8 @@ class Cookie
     {
         return isset($_COOKIE[$key]);
     }
+
+
 
     /**
      * Sets a cookie
@@ -35,6 +43,8 @@ class Cookie
     {
         setcookie($key, $val, time()+3600);
     }
+
+
 
     /**
      * Retrieve a cookie
@@ -48,6 +58,7 @@ class Cookie
     }
 
 
+
     /**
      * Dumps the $_COOKIE
      * Good for debugging
@@ -58,6 +69,8 @@ class Cookie
         var_dump($_COOKIE);
     }
 
+
+
     /**
      * Deletes variable from $_COOKIE if exists
      * @param $key string The key variable to unset from $_COOKIE
@@ -67,6 +80,8 @@ class Cookie
     {
         setcookie($key, "", time() - 3600);
     }
+
+
 
     /**
      * Destroys all variables from $_COOKIE if exists

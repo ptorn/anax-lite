@@ -2,6 +2,10 @@
 
 namespace Peto16\Database;
 
+/**
+ * Database class to handle the database connection.
+ *
+ */
 class Database implements \Anax\Common\ConfigureInterface
 {
     use \Anax\Common\ConfigureTrait;
@@ -12,6 +16,7 @@ class Database implements \Anax\Common\ConfigureInterface
      */
     private $pdo = null;
     private $stmt = null;
+
 
 
     /**
@@ -45,6 +50,8 @@ class Database implements \Anax\Common\ConfigureInterface
         }
         return $this;
     }
+
+
 
     /**
      * Execute a select-query with arguments and return the resultset.
@@ -86,37 +93,57 @@ class Database implements \Anax\Common\ConfigureInterface
         return $res;
     }
 
+
+
+    /**
+     * FetchAll data from the database.
+     * @method fetchAll
+     * @return array   Returns the result from the database.
+     */
     public function fetchAll()
     {
         return $this->stmt->fetchAll();
     }
 
+
+
+    /**
+     * Fetch the first one result from the database.
+     * @method fetchOne
+     * @return array   With the result
+     */
     public function fetchOne()
     {
         return $this->stmt->fetch();
     }
 
+
+
+    /**
+     * Execute and fetch data from the database.
+     * @method executeFetch
+     * @param  string       $query to be executed
+     * @param  array       $param to insert into query.
+     * @return array              Result from query.
+     */
     public function executeFetch($query, $param)
     {
         $this->execute($query, $param);
         return $this->stmt->fetch();
     }
 
-    public function dataExcist($query, $username)
+
+
+    /**
+     * Check if data excist in database.
+     * @method dataExcist
+     * @param  string     $query      To check.
+     * @param  string     $checkValue String to search for.
+     * @return array                  Result from search.
+     */
+    public function dataExcist($query, $checkValue)
     {
-        $this->execute($query, [$username]);
+        $this->execute($query, [$checkValue]);
         return $this->fetchOne();
-    }
-
-
-    public function addData($query, $param)
-    {
-        return $this->execute($query, $param);
-    }
-
-
-    public function editData($query, $param)
-    {
-        return $this->execute($query, $param);
     }
 }

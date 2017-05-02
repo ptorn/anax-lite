@@ -39,12 +39,12 @@ $app->router->add("administration/create/process", function () use ($app) {
         $password = getPost('password') ? password_hash(getPost('password'), PASSWORD_DEFAULT) : false
     ];
     $app->db->connect();
-    $query = "SELECT * FROM anaxlite_users WHERE username=?;";
+    $query = "SELECT * FROM anaxlite_Users WHERE username=?;";
     if ($app->db->dataExcist($query, $param[0])) {
         $app->redirect("administration/create?error=1");
     } else {
-        $query = "INSERT INTO anaxlite_users(username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?);";
-        if ($app->db->addData($query, $param)) {
+        $query = "INSERT INTO anaxlite_Users(username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?);";
+        if ($app->db->execute($query, $param)) {
             $app->redirect("login");
         } else {
             $app->redirect("administration/create?error=1");

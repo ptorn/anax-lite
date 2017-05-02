@@ -1,0 +1,80 @@
+<?php
+namespace Peto16\Content;
+
+/**
+ * Class to handle the content.
+ *
+ */
+class Content
+{
+    public $id;
+    public $title;
+    public $path;
+    public $slug;
+    public $data;
+    public $type;
+    public $filter;
+    public $published;
+    public $created;
+    public $updated;
+    public $deleted;
+
+
+
+    /**
+     * Constructor for a content object.
+     * @method __construct
+     * @param  data      $data Data from the database.
+     */
+    public function __construct($data)
+    {
+        $this->id = $data->id;
+        $this->title = $data->title;
+        $this->path = $data->path;
+        $this->slug = $data->slug;
+        $this->data = $data->data;
+        $this->type = $data->type;
+        $this->filter = $data->filter;
+        $this->published = $data->published;
+        $this->created = $data->created;
+        $this->updated = $data->updated;
+        $this->deleted = $data->deleted;
+    }
+
+
+
+    /**
+     * Check if a page is a regular page.
+     * @method isPage
+     * @return boolean Returns true if a page or false if not.
+     */
+    public function isPage()
+    {
+        return $this->type == "page" ? true : false;
+    }
+
+
+
+    /**
+     * Check if page is a blog.
+     * @method isBlog
+     * @return boolean Returns true if the page is a blog.
+     */
+    public function isBlog()
+    {
+        return $this->type == "post" ? true : false;
+    }
+
+
+
+    /**
+     * Check if content is a block.
+     * @method isBlock
+     * @return boolean Return true if content is a block.
+     */
+    public function isBlock()
+    {
+        return $this->type == "block" ? true : false;
+    }
+}
+

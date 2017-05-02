@@ -7,7 +7,7 @@
 $app->router->add("page/{slug}", function ($slug) use ($app) {
     if ($slug) {
         $app->db->connect();
-        $query = "SELECT * FROM anaxlite_content WHERE slug = ?;";
+        $query = "SELECT * FROM anaxlite_Content WHERE slug = ?;";
         $data = $app->db->executeFetchAll($query, $slug);
         $content = new \Peto16\Content\Content($data[0]);
         if (!$content->isPage()) {
@@ -31,7 +31,7 @@ $app->router->add("page/{slug}", function ($slug) use ($app) {
 $app->router->add("blog/{slug}", function ($slug) use ($app) {
     if ($slug) {
         $app->db->connect();
-        $query = "SELECT * FROM anaxlite_content WHERE slug = ?;";
+        $query = "SELECT * FROM anaxlite_Content WHERE slug = ?;";
         $data = $app->db->executeFetchAll($query, $slug);
         $content = new \Peto16\Content\Content($data[0]);
         if (!$content->isBlog()) {

@@ -1,6 +1,10 @@
 <?php
 namespace Peto16\Navbar;
 
+/**
+ * Navbar class.
+ *
+ */
 class Navbar implements
     \Anax\Common\ConfigureInterface,
     \Anax\Common\AppInjectableInterface
@@ -23,6 +27,7 @@ class Navbar implements
             return ' class="active"';
         }
     }
+
 
 
     /**
@@ -55,6 +60,12 @@ class Navbar implements
 
 
 
+    /**
+     * Generate the HTML for the navbar.
+     * @method generateNavbarHTML
+     * @param  string             $class The preferd CSS class.
+     * @return string                    Navbar in HTML.
+     */
     public function generateNavbarHTML($class)
     {
         $items = $this->config["items"];

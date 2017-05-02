@@ -6,8 +6,8 @@ SET NAMES 'utf8';
 CREATE DATABASE IF NOT EXISTS peto16;
 USE peto16;
 
-DROP TABLE IF EXISTS anaxlite_users;
-CREATE TABLE anaxlite_users
+DROP TABLE IF EXISTS anaxlite_Users;
+CREATE TABLE anaxlite_Users
 (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     username VARCHAR(30) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE anaxlite_users
 );
 
 INSERT INTO
-    anaxlite_users(username, password, email, firstname, lastname, administrator, enabled)
+    anaxlite_Users(username, password, email, firstname, lastname, administrator, enabled)
 VALUES
     ('admin', '$2y$10$vaqfYKE2TfIzo7EQMxd8fOg3AvnPBZPTtV4l98aN4Ep6TkmjA2/Cm', 'admin@example.com', 'Peder', 'Tornberg', True, True),
     ('doe', '$2y$10$dYBys9cIIKEsdtQoiIiELOVkuRbcyfMZt7L8Pinw7JHDpZEol7UN6', 'user@example.com', 'John', 'Doe', False, True),

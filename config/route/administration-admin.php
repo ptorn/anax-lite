@@ -21,10 +21,10 @@ $app->router->add("administration/user/admin", function () use ($app) {
                 array_push($searchQuery, $column . " LIKE '%" . $keyword . "%'");
             }
             $where = implode(' OR ', $searchQuery);
-            $query = "SELECT * FROM anaxlite_users WHERE $where";
+            $query = "SELECT * FROM anaxlite_Users WHERE $where";
             break;
         default:
-            $query = "SELECT * FROM anaxlite_users";
+            $query = "SELECT * FROM anaxlite_Users";
             break;
     }
     $orderBy = getGet('orderby') ?: "id";
@@ -43,7 +43,7 @@ $app->router->add("administration/user/admin", function () use ($app) {
     if (!(is_numeric($hits) && $hits > 0 && $hits <= 8)) {
         die("Not valid for hits.");
     }
-    $sql = "SELECT COUNT(id) AS max FROM anaxlite_users;";
+    $sql = "SELECT COUNT(id) AS max FROM anaxlite_Users;";
     $max = $app->db->executeFetchAll($sql);
     $max = ceil($max[0]->max / $hits);
 
@@ -76,7 +76,7 @@ $app->router->add("administration/user/admin", function () use ($app) {
 $app->router->add("administration/user/admin/delete", function () use ($app) {
     if (getGet('id')) {
         $app->db->connect();
-        $query = "DELETE FROM anaxlite_users WHERE id = ?;";
+        $query = "DELETE FROM anaxlite_Users WHERE id = ?;";
         $app->db->execute($query, $_GET['id']);
     }
     $app->redirect("administration/user/admin");
@@ -86,7 +86,7 @@ $app->router->add("administration/user/admin/delete", function () use ($app) {
 $app->router->add("administration/user/admin/edit", function () use ($app) {
     if (getGet('id')) {
         $app->db->connect();
-        $query = $query = "SELECT * FROM anaxlite_users WHERE id = ?;";
+        $query = $query = "SELECT * FROM anaxlite_Users WHERE id = ?;";
         $user = $app->db->executeFetchAll($query, $_GET['id']);
     }
     $app->view->add("take1/header", ["title" => "Admin redigera"]);
@@ -125,7 +125,7 @@ $app->router->add("administration/user/admin/edit/process", function () use ($ap
             password_hash($password, PASSWORD_DEFAULT),
             $id
         ];
-        $query = "UPDATE anaxlite_users SET firstname = ?, lastname = ?, email = ?, level = ?, administrator = ?, enabled = ?, password = ? WHERE id = ?;";
+        $query = "UPDATE anaxlite_Users SET firstname = ?, lastname = ?, email = ?, level = ?, administrator = ?, enabled = ?, password = ? WHERE id = ?;";
     } else {
         $param = [
             $firstname,
@@ -136,11 +136,11 @@ $app->router->add("administration/user/admin/edit/process", function () use ($ap
             $enabled,
             $id
         ];
-        $query = "UPDATE anaxlite_users SET firstname = ?, lastname = ?, email = ?, level = ?, administrator = ?, enabled = ? WHERE id = ?;";
+        $query = "UPDATE anaxlite_Users SET firstname = ?, lastname = ?, email = ?, level = ?, administrator = ?, enabled = ? WHERE id = ?;";
     }
 
     $app->db->connect();
-    if ($app->db->editData($query, $param)) {
+    if ($app->db->execute($query, $param)) {
         $app->redirect("administration/user/admin");
     }
 });
@@ -173,12 +173,12 @@ $app->router->add("administration/user/admin/create/process", function () use ($
         $password = getPost('password') ? password_hash(getPost('password'), PASSWORD_DEFAULT) : false
     ];
     $app->db->connect();
-    $query = "SELECT * FROM anaxlite_users WHERE username=?;";
+    $query = "SELECT * FROM anaxlite_Users WHERE username=?;";
     if ($app->db->dataExcist($query, $param[0])) {
         $app->redirect("administration/user/admin/create?error=1");
     } else {
-        $query = "INSERT INTO anaxlite_users(username, firstname, lastname, email, administrator, enabled, password) VALUES (?, ?, ?, ?, ?, ?, ?);";
-        if ($app->db->addData($query, $param)) {
+        $query = "INSERT INTO anaxlite_Users(username, firstname, lastname, email, administrator, enabled, password) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        if ($app->db->execute($query, $param)) {
             $app->redirect("administration/user/admin");
         } else {
             $app->redirect("administration/user/admin/create?error=1");

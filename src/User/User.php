@@ -1,6 +1,10 @@
 <?php
 namespace Peto16\User;
 
+/**
+ * User class
+ *
+ */
 class User
 {
     public $id;
@@ -13,11 +17,25 @@ class User
     public $enabled = true;
     private $password;
 
+
+
+    /**
+     * Get the full name.
+     * @method getFullName
+     * @return string      Return first and lastname.
+     */
     public function getFullName()
     {
         return $this->firstname . " " . $this->lastname;
     }
 
+
+
+    /**
+     * Get a data array with user data.
+     * @method getDataArray
+     * @return array       Array with users data
+     */
     public function getDataArray()
     {
         return [
@@ -31,6 +49,14 @@ class User
         ];
     }
 
+
+
+    /**
+     * Login user.
+     * @method loginUser
+     * @param  string    $password Password to validate
+     * @return boolean             Return true if logged in else return false.
+     */
     public function loginUser($password)
     {
         if ($this->validate($password)) {
@@ -44,6 +70,13 @@ class User
         return false;
     }
 
+
+
+    /**
+     * Set user data to the object.
+     * @method setUserData
+     * @param  Obj      $dbUser data from the database about the user.
+     */
     public function setUserData($dbUser)
     {
         $this->id = $dbUser->id;
@@ -58,6 +91,13 @@ class User
     }
 
 
+
+    /**
+     * Validate pasword
+     * @method validate
+     * @param  string   $password Password to be validated.
+     * @return boolean            Return true if valid else false.
+     */
     private function validate($password)
     {
         return password_verify($password, $this->password);

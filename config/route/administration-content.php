@@ -1,7 +1,14 @@
 <?php
+
+$app->router->add("administration/content/**", function () use ($app) {
+    if (!isLoggedInAndActive($app)) {
+        $app->redirect("login");
+    }
+});
+
 $app->router->add("administration/content", function () use ($app) {
     $app->db->connect();
-    $query = "SELECT * FROM anaxlite_content";
+    $query = "SELECT * FROM anaxlite_Content";
 
     $orderBy = getGet('orderby') ?: "id";
     $order = getGet('order') ?: "asc";
@@ -19,7 +26,7 @@ $app->router->add("administration/content", function () use ($app) {
     if (!(is_numeric($hits) && $hits > 0 && $hits <= 8)) {
         die("Not valid for hits.");
     }
-    $sql = "SELECT COUNT(id) AS max FROM anaxlite_users;";
+    $sql = "SELECT COUNT(id) AS max FROM anaxlite_Users;";
     $max = $app->db->executeFetchAll($sql);
     $max = ceil($max[0]->max / $hits);
 
@@ -80,18 +87,18 @@ $app->router->add("administration/content/create/process", function () use ($app
 
     $app->db->connect();
 
-    $query = "SELECT * FROM anaxlite_content WHERE slug = ?;";
+    $query = "SELECT * FROM anaxlite_Content WHERE slug = ?;";
     if ($app->db->dataExcist($query, $params["slug"])) {
         $app->redirect("administration/content/create?error=1");
     }
 
-    $query = "SELECT * FROM anaxlite_content WHERE path = ?;";
+    $query = "SELECT * FROM anaxlite_Content WHERE path = ?;";
     if ($app->db->dataExcist($query, $params["path"])) {
         $app->redirect("administration/content/create?error=2");
     }
 
-    $query = "INSERT INTO anaxlite_content(title, path, slug, data, type, filter, published) VALUES (?, ?, ?, ?, ?, ?, ?);";
-    if ($app->db->addData($query, array_values($params))) {
+    $query = "INSERT INTO anaxlite_Content(title, path, slug, data, type, filter, published) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    if ($app->db->execute($query, array_values($params))) {
         $app->redirect("administration/content");
     } else {
         $app->redirect("administration/content/create?error=2");
@@ -101,7 +108,7 @@ $app->router->add("administration/content/create/process", function () use ($app
 $app->router->add("administration/content/edit", function () use ($app) {
     if (getGet('id')) {
         $app->db->connect();
-        $query = $query = "SELECT * FROM anaxlite_content WHERE id = ?;";
+        $query = $query = "SELECT * FROM anaxlite_Content WHERE id = ?;";
         $data = $app->db->executeFetchAll($query, $_GET['id']);
     }
     $app->view->add("take1/header", ["title" => "Redigera innehåll"]);
@@ -139,18 +146,18 @@ $app->router->add("administration/content/edit/process", function () use ($app) 
 
     $app->db->connect();
 
-    $query = "SELECT * FROM anaxlite_content WHERE slug = ?;";
+    $query = "SELECT * FROM anaxlite_Content WHERE slug = ?;";
     if ($app->db->dataExcist($query, $params["slug"])) {
         $app->redirect("administration/content/edit?id=" . $params["id"] . "&error=1");
     }
 
-    $query = "SELECT * FROM anaxlite_content WHERE path = ?;";
+    $query = "SELECT * FROM anaxlite_Content WHERE path = ?;";
     if ($app->db->dataExcist($query, $params["path"])) {
         $app->redirect("administration/content/edit?id=" . $params["id"] . "&error=2");
     }
 
-    $query = "UPDATE anaxlite_content SET title = ?, path = ?, slug = ?, data = ?, type = ?, filter = ?, published = ? WHERE id = ?;";
-    if ($app->db->editData($query, array_values($params))) {
+    $query = "UPDATE anaxlite_Content SET title = ?, path = ?, slug = ?, data = ?, type = ?, filter = ?, published = ? WHERE id = ?;";
+    if ($app->db->execute($query, array_values($params))) {
         $app->redirect("administration/content");
     }
 });
@@ -162,17 +169,14 @@ $app->router->add("administration/content/delete", function () use ($app) {
     if (!is_numeric($id)) {
         die("Inget giltigt id.");
     }
-    var_dump(hasKeyPost("doDelete"));
-
     if (hasKeyPost("doDelete")) {
         $id = getPost("id");
-        var_dump($id);
-        $query = "UPDATE anaxlite_content SET deleted=NOW() WHERE id = ?;";
+        $query = "UPDATE anaxlite_Content SET deleted=NOW() WHERE id = ?;";
         $app->db->execute($query, [$id]);
         $app->redirect("administration/content");
     }
 
-    $query = "SELECT id, title FROM anaxlite_content WHERE id = ?;";
+    $query = "SELECT id, title FROM anaxlite_Content WHERE id = ?;";
     $data = $app->db->executeFetch($query, $id);
     $app->view->add("take1/header", ["title" => "Radera innehåll"]);
     $app->view->add("take1/flash", [
@@ -188,7 +192,7 @@ $app->router->add("administration/content/delete", function () use ($app) {
 $app->router->add("administration/content/delete/process", function () use ($app) {
     if (getPost('id')) {
         $app->db->connect();
-        $query = "UPDATE anaxlite_content SET deleted=NOW() WHERE id=?;";
+        $query = "UPDATE anaxlite_Content SET deleted=NOW() WHERE id=?;";
         $app->db->execute($query, getGet('id'));
     }
     $app->redirect("administration/content");

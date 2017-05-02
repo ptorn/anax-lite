@@ -1,6 +1,10 @@
 <?php
 namespace Peto16\Content;
 
+/**
+ * Class to handle the content.
+ *
+ */
 class Content
 {
     public $id;
@@ -16,6 +20,12 @@ class Content
     public $deleted;
 
 
+
+    /**
+     * Constructor for a content object.
+     * @method __construct
+     * @param  data      $data Data from the database.
+     */
     public function __construct($data)
     {
         $this->id = $data->id;
@@ -33,6 +43,11 @@ class Content
 
 
 
+    /**
+     * Check if a page is a regular page.
+     * @method isPage
+     * @return boolean Returns true if a page or false if not.
+     */
     public function isPage()
     {
         return $this->type == "page" ? true : false;
@@ -40,6 +55,11 @@ class Content
 
 
 
+    /**
+     * Check if page is a blog.
+     * @method isBlog
+     * @return boolean Returns true if the page is a blog.
+     */
     public function isBlog()
     {
         return $this->type == "post" ? true : false;
@@ -47,6 +67,11 @@ class Content
 
 
 
+    /**
+     * Check if content is a block.
+     * @method isBlock
+     * @return boolean Return true if content is a block.
+     */
     public function isBlock()
     {
         return $this->type == "block" ? true : false;

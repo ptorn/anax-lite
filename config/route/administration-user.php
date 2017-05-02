@@ -10,7 +10,7 @@ $app->router->add("login", function () use ($app) {
     $user = new \Peto16\User\User();
     if ($username && $password) {
         $app->db->connect();
-        $dbUser = $app->db->executeFetchAll("SELECT * FROM anaxlite_users WHERE username=?", [$username]);
+        $dbUser = $app->db->executeFetchAll("SELECT * FROM anaxlite_Users WHERE username=?", [$username]);
         if (!empty($dbUser)) {
             $user->setUserData($dbUser[0]);
             $status = $user->loginUser($password) ?: "Fel användaruppgifter!";
@@ -82,8 +82,8 @@ $app->router->add("administration/user/edit/process", function () use ($app) {
         $previousUserData->username
     ];
     $app->db->connect();
-    $query = "UPDATE anaxlite_users SET firstname = ?, lastname = ?, email = ? WHERE username = ?;";
-    if ($app->db->editData($query, $param)) {
+    $query = "UPDATE anaxlite_Users SET firstname = ?, lastname = ?, email = ? WHERE username = ?;";
+    if ($app->db->execute($query, $param)) {
         $app->session->set('user', $user);
         $app->redirect("administration/user");
     }
@@ -124,8 +124,8 @@ $app->router->add("administration/user/edit/password/process", function () use (
     $user = $app->session->get("user");
     if ($password == $password2 && $password != "") {
         $app->db->connect();
-        $query = "UPDATE anaxlite_users SET password = ? WHERE username = ?;";
-        if ($app->db->editData($query, [password_hash($password, PASSWORD_DEFAULT), $user->username])) {
+        $query = "UPDATE anaxlite_Users SET password = ? WHERE username = ?;";
+        if ($app->db->execute($query, [password_hash($password, PASSWORD_DEFAULT), $user->username])) {
             $app->redirect("administration/user");
         }
     } elseif ($password != "") {

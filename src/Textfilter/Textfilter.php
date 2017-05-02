@@ -2,6 +2,10 @@
 
 namespace Peto16\Textfilter;
 
+/**
+ * Textfilter class.
+ *
+ */
 class Textfilter
 {
     /**
@@ -40,10 +44,20 @@ class Textfilter
     }
 
 
+
+    /**
+     * Strip tags from string and format text.
+     * @method formatToHtmlStrip
+     * @param  string            $text   Text to be formated
+     * @param  string            $format Comma sepperated list with formats
+     * @return string                    Return formated text
+     */
     public function formatToHtmlStrip($text, $format)
     {
         return $this->formatToHtml(strip_tags($text), $format);
     }
+
+
 
     /**
     * Helper, BBCode formatting converting to HTML.

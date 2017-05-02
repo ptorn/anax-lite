@@ -4,8 +4,8 @@ SET NAMES utf8;
 --
 -- Create table for Content
 --
-DROP TABLE IF EXISTS `anaxlite_content`;
-CREATE TABLE `anaxlite_content`
+DROP TABLE IF EXISTS `anaxlite_Content`;
+CREATE TABLE `anaxlite_Content`
 (
   `id` INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
   `path` CHAR(120) UNIQUE,
@@ -30,7 +30,7 @@ CREATE TABLE `anaxlite_content`
 ) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
 
 
-INSERT INTO `anaxlite_content` (`path`, `slug`, `type`, `title`, `data`, `filter`) VALUES
+INSERT INTO `anaxlite_Content` (`path`, `slug`, `type`, `title`, `data`, `filter`) VALUES
     ("en-bloggpost-som-exempel", "en-bloggpost-som-exempel", "post", "Välkommen till min blogg här testar jag lite länkar
 https://dbwebb.se", "link"),
     ("testsida-med-slug", "testsida-med-slug", "page", "Testsida", "Detta är en enkel test sida som visar att allt fungerar som det ska. https://dbwebb.se", "link"),
@@ -39,4 +39,4 @@ https://dbwebb.se", "link"),
     ("blogpost-3", "nu-har-hosten-kommit", "post", "Nu har hösten kommit", "Detta är en bloggpost som berättar att sommaren har kommit, ett budskap som kräver en bloggpost", "nl2br"),
     ("footer-block", "footer-block", "block", "Footer block", "Peder Tornberg 2017 OOPHP", "link");
 
-SELECT `id`, `path`, `slug`, `type`, `title`, `created` FROM `anaxlite_content`;
+SELECT `id`, `path`, `slug`, `type`, `title`, `created` FROM `anaxlite_Content`;

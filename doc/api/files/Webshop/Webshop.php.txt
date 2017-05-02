@@ -1,0 +1,182 @@
+<?php
+
+namespace Peto16\Webshop;
+
+/**
+ * Class Webshop.
+ *
+ */
+class Webshop
+{
+    private $db;
+
+
+
+    /**
+     * Construct to give access to the db.
+     * @method __construct
+     * @param  PDO      $db database access.
+     */
+    public function __construct($db)
+    {
+        $this->db = $db;
+    }
+
+
+
+    /**
+     * Create a product
+     * @method createProduct
+     * @param  array        $params      Array with params to match the query.
+     * @param  array        $categories  Array with categories for the product.
+     * @return boolean                   Return true when done.
+     */
+    public function createProduct($params, $categories)
+    {
+        $query = "CALL createProduct(?, ?, ?, ?);";
+        if ($this->db->execute($query, array_values($params))) {
+            $query = "SELECT MAX(id) AS id FROM anaxlite_Product";
+            $lastId = $this->db->executeFetchAll($query)[0]->id;
+
+            $this->addProd2Cat($lastId, $categories);
+        }
+        return true;
+    }
+
+
+
+    /**
+     * Add product to categories
+     * @method addProd2Cat
+     * @param  integer      $prodId The id of a product
+     * @param  array        $catId  A list with categories to add the product.
+     */
+    public function addProd2Cat($prodId, $catId)
+    {
+        if (is_array($catId)) {
+            foreach ($catId as $cat) {
+                $query = "CALL addProd2Cat(?, ?);";
+                $this->db->execute($query, [$prodId, $cat]);
+            }
+        } else {
+            $query = "CALL addProd2Cat(?, ?);";
+            $this->db->execute($query, [$prodId, $catId]);
+        }
+    }
+
+
+
+    /**
+     * Get the product data.
+     * @method getProduct
+     * @param  integer     $id The product id.
+     * @return Obj         A result object from the database.
+     */
+    public function getProduct($id)
+    {
+        $query = "SELECT * FROM VProducts WHERE id = ?;";
+        return $this->db->executeFetchAll($query, $id)[0];
+    }
+
+
+
+    /**
+     * Get all categories
+     * @method getCategories
+     * @return array        Result with all the categories.
+     */
+    public function getCategories()
+    {
+        $query = "SELECT * FROM anaxlite_ProdCategory;";
+        return $this->db->executeFetchAll($query);
+    }
+
+
+
+    /**
+     * Update the products data
+     * @method updateProduct
+     * @param  array        $params     Array with data to update the product
+     * @param  array        $categories Array with categories
+     * @return boolean                  Return true when done.
+     */
+    public function updateProduct($params, $categories = null)
+    {
+        $query = "CALL updateProduct(?, ?, ?, ?, ?);";
+        $this->db->execute($query, $params);
+        $query = "DELETE FROM anaxlite_Prod2Cat WHERE prod_id = ?;";
+        $this->db->execute($query, $params[4]);
+        $this->updateProductCategories($params[4], $categories);
+        return true;
+    }
+
+
+
+    /**
+     * Update the products categories
+     * @method updateProductCategories
+     * @param  integer          $prodId     The id of the product.
+     * @param  array            $categories Array with categories.
+     * @return void
+     */
+    private function updateProductCategories($prodId, $categories)
+    {
+        $params = [];
+        $valueStr = "";
+        foreach ($categories as $category) {
+            array_push($params, $prodId, $category);
+            $valueStr .= "(?, ?), ";
+        }
+        $valueStr = substr($valueStr, 0, -2);
+        $this->db->execute("INSERT INTO anaxlite_Prod2Cat(prod_id, cat_id) VALUES $valueStr;", $params);
+    }
+
+
+
+    /**
+     * Get a products inventory.
+     * @method getInvProduct
+     * @param  integer        $id Products id.
+     * @return Obj            With data from inventory view.
+     */
+    public function getInvProduct($id)
+    {
+        $query = "SELECT * FROM VInvProducts WHERE id = $id;";
+        return $this->db->executeFetchAll($query)[0];
+    }
+
+
+
+    /**
+     * Get the location of the product in the inventory.
+     * @method getInvPositions
+     * @return Obj          With position data.
+     */
+    public function getInvPositions()
+    {
+        $query = "SELECT * FROM anaxlite_InvenShelf;";
+        return $this->db->executeFetchAll($query);
+    }
+
+
+
+    /**
+     * Update products inventory using a stored procedure.
+     * @method updateInvProduct
+     * @param  array           $params Array with shelfid, amount, productid.
+     * @return boolean         Return true when done.
+     */
+    public function updateInvProduct($params)
+    {
+        $query = "SELECT * FROM anaxlite_Inventory WHERE prod_id = ?;";
+        if ($this->db->dataExcist($query, $params[2])) {
+            $query = "CALL updateInvProduct(?, ?, ?);";
+            $this->db->execute($query, $params);
+        } else {
+            $query = "INSERT INTO `anaxlite_Inventory` (`shelf_id`, `items`, `prod_id`) VALUES (?, ?, ?);";
+            $this->db->execute($query, $params);
+        }
+        return true;
+    }
+}
+
