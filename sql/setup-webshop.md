@@ -1,8 +1,9 @@
 #Webshop Database API
+
 These are the commands to be used for the database.
 
-##Product
-###Create a product
+## Product
+### Create a product
 ```
 CALL createProduct(name, description, image, price);
 ```
@@ -12,7 +13,7 @@ CALL createProduct(name, description, image, price);
 + `price` DECIMAL
 
 
-###Add product to category
+### Add product to category
 ```
 CALL addProd2Cat(prod_id, cat_id);
 ```
@@ -20,7 +21,7 @@ CALL addProd2Cat(prod_id, cat_id);
 + `cat_id` INT
 
 
-###Update a product
+### Update a product
 ```
 CALL updateProduct(newName, newDescription, newImage, newPrice, prod_id);
 ```
@@ -31,22 +32,22 @@ CALL updateProduct(newName, newDescription, newImage, newPrice, prod_id);
 + `prod_id` INT
 
 
-###Delete product
+### Delete product
 ```
 CALL deleteProduct(prod_id);
 ```
 + `prod_id` INT
 
 
-##Shopping cart
-###Create a cart
+## Shopping cart
+### Create a cart
 ```
 CALL createCart(in_customer_id);
 ```
 + `in_customer_id` INT
 
 
-###Add product to cart
+### Add product to cart
 ```
 CALL addProd2Cart(in_cart_id, in_prod_id, in_amount);
 ```
@@ -55,7 +56,7 @@ CALL addProd2Cart(in_cart_id, in_prod_id, in_amount);
 + `in_amount` INT
 
 
-###Remove product from cart
+### Remove product from cart
 ```
 CALL removeProdFromCart(in_cart_id, in_prod_id, in_amount);
 ```
@@ -65,8 +66,8 @@ CALL removeProdFromCart(in_cart_id, in_prod_id, in_amount);
 
 
 
-##Order management
-###Create a order
+## Order management
+### Create a order
 Create order from cart_id
 ```
 CALL createOrder(in_cart_id, in_customer_id);
@@ -75,7 +76,7 @@ CALL createOrder(in_cart_id, in_customer_id);
 + `in_customer_id` INT
 
 
-###Delete order
+### Delete order
 Delete order using order id.
 ```
 CALL deleteOrder(in_order_id);
@@ -85,42 +86,42 @@ CALL deleteOrder(in_order_id);
 
 
 ## Views to get data
-###VProducts
+### VProducts
 ```
 SELECT * FROM VProducts;
 ```
 Get all product information on all products.
 
 
-###VInventory
+### VInventory
 ```
 SELECT * FROM VInventory;
 ```
 Get all data from the inventory and its positions.
 
 
-###VInvProducts
+### VInvProducts
 ```
 SELECT * FROM VInventory;
 ```
 Get inventory of the products.
 
 
-###VShoppingCartDetails
+### VShoppingCartDetails
 ```
 SELECT * FROM VShoppingCartDetails;
 ```
 Display all details about all shoppingcarts.
 
 
-###VOrderDetails
+### VOrderDetails
 ```
 SELECT * FROM VOrderDetails;
 ```
 Get all orderdetails.
 
 
-###VInventoryLow
+### VInventoryLow
 ```
 SELECT * FROM VInventoryLow;
 ```
