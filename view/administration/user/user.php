@@ -25,6 +25,9 @@
                 <div class="button button-form">
                     <a href="<?= $app->url->create('administration/content') ?>"><button name="button">Innehåll</button></a>
                 </div>
+                <div class="button button-form">
+                    <a href="<?= $app->url->create('administration/webshop') ?>"><button name="button">Webshop</button></a>
+                </div>
             </main>
         </div>
     </div>

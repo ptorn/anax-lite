@@ -234,3 +234,49 @@ $app->router->add("administration/webshop/inventory/edit/process", function () u
         $app->redirect("administration/webshop/inventory");
     }
 });
+
+$app->router->add("administration/webshop/inventory/log", function () use ($app) {
+
+    $query = "SELECT * FROM VInventoryLow";
+
+    $orderBy = getGet('orderby') ?: "id";
+    $order = getGet('order') ?: "asc";
+    // Only these values are valid
+    $orders = ["asc", "desc"];
+    $orderColumns = ["id", "name"];
+    if (!(in_array($orderBy, $orderColumns) && in_array($order, $orders))) {
+        die("Ej godkänd input!");
+    }
+    $query .= " ORDER BY $orderBy $order";
+
+
+    // Paginering
+    $hits = getGet("hits", 5);
+    if (!(is_numeric($hits) && $hits > 0 && $hits <= 20)) {
+        die("Not valid for hits.");
+    }
+    $sql = "SELECT COUNT(id) AS max FROM VInventoryLow;";
+    $max = $app->db->executeFetchAll($sql);
+    $max = ceil($max[0]->max / $hits);
+
+    // Get current page
+    $page = getGet("page", 1);
+    if (!(is_numeric($hits) && $page > 0 && $page <= $max)) {
+        die("Not valid for page.");
+    }
+    $offset = $hits * ($page - 1);
+
+    $query .= " LIMIT $hits OFFSET $offset;";
+
+    $content = $app->db->executeFetchAll($query);
+    $app->view->add("take1/header", ["title" => "Innehåll lagerlogg"]);
+    $app->view->add("take1/flash");
+    $app->view->add("administration/webshop/inventory/log", [
+        "content"   => $content,
+        "max"       => $max
+    ]);
+    $app->view->add("take1/byline");
+    $app->view->add("take1/footer");
+    $app->response->setBody([$app->view, "render"])
+              ->send();
+});

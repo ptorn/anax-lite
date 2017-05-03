@@ -27,7 +27,6 @@ DROP TABLE IF EXISTS `anaxlite_Customer`;
 
 
 
-
 -- ------------------------------------------------------------------------
 --
 -- anaxlite_Product and product category
@@ -72,7 +71,7 @@ CREATE TABLE `anaxlite_InvenShelf` (
     `shelf` CHAR(6),
     `description` VARCHAR(40),
 
-	PRIMARY KEY (`shelf`)
+    PRIMARY KEY (`shelf`)
 );
 
 CREATE TABLE `anaxlite_Inventory` (
@@ -87,7 +86,7 @@ CREATE TABLE `anaxlite_Inventory` (
 );
 
 CREATE TABLE `anaxlite_InventoryLow` (
-	`id` INT AUTO_INCREMENT,
+    `id` INT AUTO_INCREMENT,
     `prod_id` INT,
     `items` INT,
     `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -95,6 +94,7 @@ CREATE TABLE `anaxlite_InventoryLow` (
     PRIMARY KEY(`id`),
     FOREIGN KEY (`prod_id`) REFERENCES `anaxlite_Product` (`id`)
 );
+
 
 
 -- ------------------------------------------------------------------------
@@ -143,6 +143,30 @@ CREATE TABLE `anaxlite_OrderRow` (
 
 -- ------------------------------------------------------------------------
 --
+-- Shopping cart.
+--
+
+CREATE TABLE `anaxlite_ShoppingCart` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `customer_id` INT,
+
+    FOREIGN KEY (`customer_id`) REFERENCES `anaxlite_Customer` (`id`)
+);
+
+CREATE TABLE `anaxlite_ShoppingCartRow` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `cart_id` INT NOT NULL,
+    `prod_id` INT NOT NULL,
+    `amount` INT NOT NULL,
+
+    FOREIGN KEY (`cart_id`) REFERENCES `anaxlite_ShoppingCart` (`id`),
+    FOREIGN KEY (`prod_id`) REFERENCES `anaxlite_Product` (`id`)
+);
+
+
+
+-- ------------------------------------------------------------------------
+--
 -- Test data
 --
 -- ------------------------------------------------------------------------
@@ -169,9 +193,6 @@ INSERT INTO `anaxlite_Prod2Cat` (`prod_id`, `cat_id`) VALUES
 (5,3)
 ;
 
-
-
-
 INSERT INTO `anaxlite_InvenShelf` (`shelf`, `description`) VALUES
 ("AA101", "Lager A, gång A, hylla 101"),
 ("AA102", "Lager A, gång A, hylla 102"),
@@ -183,6 +204,8 @@ INSERT INTO `anaxlite_Inventory` (`prod_id`, `shelf_id`, `items`) VALUES
 (3, "AA101", 98), (4, "AA102", 97),
 (5, "AA101", 96)
 ;
+
+
 
 -- ------------------------------------------------------------------------
 --
@@ -196,37 +219,10 @@ INSERT INTO `anaxlite_Customer` (`firstName`, `lastName`) VALUES
 
 
 
-
-
-
--- ------------------------------------------------------------------------
---
--- Shopping cart.
---
-
-CREATE TABLE `anaxlite_ShoppingCart` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `customer_id` INT,
-
-    FOREIGN KEY (`customer_id`) REFERENCES `anaxlite_Customer` (`id`)
-);
-
-CREATE TABLE `anaxlite_ShoppingCartRow` (
-    `id` INT AUTO_INCREMENT PRIMARY KEY,
-    `cart_id` INT NOT NULL,
-    `prod_id` INT NOT NULL,
-    `amount` INT NOT NULL,
-
-    FOREIGN KEY (`cart_id`) REFERENCES `anaxlite_ShoppingCart` (`id`),
-    FOREIGN KEY (`prod_id`) REFERENCES `anaxlite_Product` (`id`)
-);
-
-
 -- ------------------------------------------------------------------------
 --
 -- Views
 -- ------------------------------------------------------------------------
-
 
 -- -------------------------
 -- Product
@@ -256,6 +252,7 @@ ORDER BY P.id
 ;
 
 
+
 -- -------------------------
 -- Inventory
 -- -------------------------
@@ -277,6 +274,7 @@ ORDER BY S.shelf
 ;
 
 
+
 -- Inv products
 DROP VIEW IF EXISTS VInvProducts;
 CREATE VIEW VInvProducts AS
@@ -295,6 +293,7 @@ ORDER BY S.shelf
 ;
 
 
+
 -- -------------------------
 -- ShoppingCart
 -- -------------------------
@@ -306,7 +305,7 @@ SELECT
     SC.id AS CartId,
     SC.customer_id AS CustomerId,
     SCR.prod_id AS ProdId,
-	P.name AS ProdName,
+    P.name AS ProdName,
     P.description AS Description,
     P.price AS Price,
     SCR.amount AS Amount
@@ -317,6 +316,7 @@ FROM `anaxlite_ShoppingCart` AS SC
         ON SCR.prod_id = P.id
 ORDER BY SC.id
 ;
+
 
 
 -- -------------------------
@@ -342,6 +342,24 @@ ORDER BY anaxlite_OrderRow
 
 
 
+-- -------------------------
+-- InvLog
+-- -------------------------
+
+-- anaxlite_Order details
+DROP VIEW IF EXISTS VInventoryLow;
+CREATE VIEW VInventoryLow AS
+SELECT
+    ILL.id AS id,
+    ILL.prod_id AS prod_id,
+    P.name AS Name,
+    ILL.items AS Items,
+    ILL.date AS Occured
+FROM `anaxlite_InventoryLow` AS ILL
+    INNER JOIN anaxlite_Product AS P
+        ON ILL.prod_id = P.id
+ORDER BY ILL.id
+;
 -- ------------------------------------------------------------------------
 --
 -- Procedures
@@ -400,10 +418,26 @@ CREATE PROCEDURE updateProduct(
     `newDescription` VARCHAR(400),
     `newImage` VARCHAR(20),
     `newPrice` DECIMAL,
-    `newId` INT
+    `prod_id` INT
 )
 BEGIN
-    UPDATE `anaxlite_Product` SET `name` = newName, `description` = newDescription, `image` = newImage, `price` = newPrice WHERE `id` = newId;
+    UPDATE `anaxlite_Product` SET `name` = newName, `description` = newDescription, `image` = newImage, `price` = newPrice WHERE `id` = prod_id;
+END
+//
+DELIMITER ;
+
+
+
+-- Delete product
+DROP PROCEDURE IF EXISTS `deleteProduct`;
+
+DELIMITER //
+
+CREATE PROCEDURE deleteProduct(
+    `prod_id` INT
+)
+BEGIN
+    UPDATE `anaxlite_Product` SET `deleted` = NOW() WHERE `id` = prod_id;
 END
 //
 DELIMITER ;
@@ -428,7 +462,6 @@ DELIMITER ;
 
 
 
-
 -- -------------------------
 --
 -- Shoppingcart
@@ -440,12 +473,12 @@ DROP PROCEDURE IF EXISTS `createCart`;
 DELIMITER //
 
 CREATE PROCEDURE createCart(
-    IN `in_customer_id` INT
+    `in_customer_id` INT
 )
 BEGIN
-	START TRANSACTION;
-	INSERT INTO `anaxlite_ShoppingCart` (`customer_id`) VALUES
-	(in_customer_id);
+    START TRANSACTION;
+    INSERT INTO `anaxlite_ShoppingCart` (`customer_id`) VALUES
+    (in_customer_id);
     COMMIT;
 END
 //
@@ -468,12 +501,12 @@ BEGIN
     START TRANSACTION;
     IF enoughStock(in_amount, in_prod_id) THEN
         INSERT INTO `anaxlite_ShoppingCartRow` (`cart_id`, `prod_id`, `amount`) VALUES
-		(in_cart_id, in_prod_id, in_amount);
-		COMMIT;
-	ELSE
-		ROLLBACK;
-		SELECT "Inte tillräckligt i lager.";
-	END IF;
+        (in_cart_id, in_prod_id, in_amount);
+        COMMIT;
+    ELSE
+        ROLLBACK;
+        SELECT "Inte tillräckligt i lager.";
+    END IF;
 
 END
 //
@@ -492,7 +525,7 @@ CREATE PROCEDURE removeProdFromCart(
     `in_amount` INT
 )
 BEGIN
-	DECLARE `currentInvProdCart` INT;
+    DECLARE `currentInvProdCart` INT;
     DECLARE `currentInvProd` INT;
 
     START TRANSACTION;
@@ -502,28 +535,28 @@ BEGIN
 
 
     IF `currentInvProdCart` - in_amount > 0 THEN
-		UPDATE `anaxlite_ShoppingCartRow` SET `amount` = currentInvProdCart - in_amount WHERE `cart_id` = in_cart_id AND `prod_id` = in_prod_id;
+        UPDATE `anaxlite_ShoppingCartRow` SET `amount` = currentInvProdCart - in_amount WHERE `cart_id` = in_cart_id AND `prod_id` = in_prod_id;
         COMMIT;
-	ELSE
-		IF `currentInvProdCart` - in_amount < 0 THEN
-			ROLLBACK;
-			SELECT "För mycket tas från varukorgen";
-		ELSE IF currentInvProdCart - in_amount = 0 OR `currentInvProdCart` = 0 THEN
-			DELETE FROM `anaxlite_ShoppingCartRow` WHERE `cart_id` = in_cart_id AND `prod_id` = in_prod_id;
-			COMMIT;
+    ELSE
+        IF `currentInvProdCart` - in_amount < 0 THEN
+            ROLLBACK;
+            SELECT "För mycket tas från varukorgen";
+        ELSE IF currentInvProdCart - in_amount = 0 OR `currentInvProdCart` = 0 THEN
+            DELETE FROM `anaxlite_ShoppingCartRow` WHERE `cart_id` = in_cart_id AND `prod_id` = in_prod_id;
+        COMMIT;
         END IF;
         END IF;
-	END IF;
+    END IF;
 END
 //
 DELIMITER ;
+
 
 
 -- -------------------------
 --
 -- Order management
 -- -------------------------
-
 
 -- Create order
 
@@ -536,39 +569,39 @@ CREATE PROCEDURE createOrder(
     `in_customer_id` INT
 )
 BEGIN
-	DECLARE `currentStock` INT;
-	DECLARE `order_id` INT;
+    DECLARE `currentStock` INT;
+    DECLARE `order_id` INT;
     DECLARE `counter` INT;
     DECLARE `nr_rows` INT;
     DECLARE `temp_prod_id` INT;
     DECLARE `temp_amount` INT;
     DECLARE `temp_price` DECIMAL;
 
-	START TRANSACTION;
-	INSERT INTO `anaxlite_Order` (`customer`, `created`) VALUES
+    START TRANSACTION;
+    INSERT INTO `anaxlite_Order` (`customer`, `created`) VALUES
     (in_customer_id, NOW());
 
-	SET `order_id` = LAST_INSERT_ID();
+    SET `order_id` = LAST_INSERT_ID();
     SET `counter` = 0;
     SET `nr_rows` = (SELECT COUNT(*) FROM anaxlite_ShoppingCartRow WHERE `cart_id` = in_cart_id);
 
     WHILE `counter` < `nr_rows` DO
-		SET `temp_prod_id` = (SELECT `prod_id` FROM anaxlite_ShoppingCartRow WHERE `cart_id` = in_cart_id LIMIT counter, 1);
-		SET `temp_amount` = (SELECT `amount` FROM anaxlite_ShoppingCartRow WHERE `cart_id` = in_cart_id AND `prod_id` = temp_prod_id);
+        SET `temp_prod_id` = (SELECT `prod_id` FROM anaxlite_ShoppingCartRow WHERE `cart_id` = in_cart_id LIMIT counter, 1);
+        SET `temp_amount` = (SELECT `amount` FROM anaxlite_ShoppingCartRow WHERE `cart_id` = in_cart_id AND `prod_id` = temp_prod_id);
         SET `temp_price` = (SELECT `price` FROM anaxlite_Product WHERE `id` = temp_prod_id);
-		SET `currentStock` = (SELECT `items` FROM `anaxlite_Inventory` WHERE `prod_id` = temp_prod_id);
-		INSERT INTO `anaxlite_OrderRow` (`order`, `product`, `items`, `price`) VALUES
+        SET `currentStock` = (SELECT `items` FROM `anaxlite_Inventory` WHERE `prod_id` = temp_prod_id);
+        INSERT INTO `anaxlite_OrderRow` (`order`, `product`, `items`, `price`) VALUES
         (order_id, temp_prod_id, temp_amount, temp_price);
 
-		IF enoughStock(temp_amount, temp_prod_id) THEN
-			UPDATE `anaxlite_Inventory` SET `items` = currentStock - temp_amount WHERE `prod_id` = temp_prod_id;
-		ELSE
-			ROLLBACK;
-			SELECT "Inte tillräckligt i lager.";
-		END IF;
+        IF enoughStock(temp_amount, temp_prod_id) THEN
+            UPDATE `anaxlite_Inventory` SET `items` = currentStock - temp_amount WHERE `prod_id` = temp_prod_id;
+        ELSE
+            ROLLBACK;
+            SELECT "Inte tillräckligt i lager.";
+        END IF;
 
-		SET `counter` = counter + 1;
-	END WHILE;
+        SET `counter` = counter + 1;
+    END WHILE;
     DELETE FROM `anaxlite_ShoppingCartRow` WHERE `cart_id` = in_cart_id;
     DELETE FROM `anaxlite_ShoppingCart` WHERE `customer_id` = in_customer_id;
 
@@ -576,7 +609,6 @@ BEGIN
 END
 //
 DELIMITER ;
-
 
 
 
@@ -594,7 +626,7 @@ BEGIN
     DECLARE `move_prod_id` INT;
     DECLARE `move_amount` INT;
 
-	START TRANSACTION;
+    START TRANSACTION;
 
     UPDATE `anaxlite_Order` SET `deleted` = NOW() WHERE `id` = in_order_id;
 
@@ -602,51 +634,51 @@ BEGIN
     SET `nr_rows` = (SELECT COUNT(*) FROM anaxlite_OrderRow WHERE `order` = in_order_id);
 
     WHILE `counter` < `nr_rows` DO
-		SET `move_prod_id` = (SELECT `product` FROM `anaxlite_OrderRow` WHERE `order` = in_order_id LIMIT counter, 1);
-		SET `move_amount` = (SELECT `items` FROM `anaxlite_OrderRow` WHERE `order` = in_order_id LIMIT counter, 1);
+        SET `move_prod_id` = (SELECT `product` FROM `anaxlite_OrderRow` WHERE `order` = in_order_id LIMIT counter, 1);
+        SET `move_amount` = (SELECT `items` FROM `anaxlite_OrderRow` WHERE `order` = in_order_id LIMIT counter, 1);
 
         UPDATE `anaxlite_Inventory` SET `items` = (items + move_amount) WHERE `prod_id` = move_prod_id;
 
-		SET `counter` = counter + 1;
-	END WHILE;
+        SET `counter` = counter + 1;
+    END WHILE;
     COMMIT;
 END
 //
 DELIMITER ;
 
+
+
 -- ------------------------------------------------------------------------
 -- Functions
 -- ------------------------------------------------------------------------
-
-
 
 -- Check if enough in stock
 DELIMITER //
 
 DROP FUNCTION IF EXISTS enoughStock //
 CREATE FUNCTION enoughStock(
-	in_amount INT,
+    in_amount INT,
     in_prod_id INT
 )
 RETURNS BOOLEAN
 BEGIN
-	DECLARE currentStock INT;
+    DECLARE currentStock INT;
     SET currentStock = (SELECT `items` FROM `anaxlite_Inventory` WHERE `prod_id` = in_prod_id);
     IF currentStock >= in_amount THEN
-		RETURN TRUE;
-	ELSE
-		RETURN FALSE;
-	END IF;
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
 END
 //
 
 DELIMITER ;
 
 
+
 -- ------------------------------------------------------------------------
 -- Triggers
 -- ------------------------------------------------------------------------
-
 
 -- Trigger log output for low stock, less than 5
 
@@ -657,18 +689,20 @@ CREATE TRIGGER LogLowInventory
 AFTER UPDATE
 ON `anaxlite_Inventory` FOR EACH ROW
 BEGIN
-	IF NEW.items < 5 AND OLD.items >= 5 THEN
-		INSERT INTO `anaxlite_InventoryLow` (`prod_id`, `items`) VALUES
+    IF NEW.items < 5 AND OLD.items >= 5 THEN
+        INSERT INTO `anaxlite_InventoryLow` (`prod_id`, `items`) VALUES
         (NEW.prod_id, NEW.items);
-	END IF;
+    END IF;
 END
 //
 
 DELIMITER ;
+
+
+
 -- ------------------------------------------------------------------------
 -- Test
 -- ------------------------------------------------------------------------
-
 
 SELECT * FROM VProducts;
 
@@ -684,9 +718,9 @@ SELECT * FROM VOrderDetails;
 
 CALL createCart(1);
 SELECT * FROM anaxlite_ShoppingCart;
+
 CALL addProd2Cart(1, 1, 98);
 CALL addProd2Cart(1, 2, 3);
-
 SELECT * FROM anaxlite_ShoppingCartRow;
 
 SELECT * FROM VShoppingCartDetails;
@@ -695,12 +729,11 @@ SELECT * FROM VShoppingCartDetails;
 
 SELECT * FROM anaxlite_ShoppingCart;
 
-
 CALL createOrder(1, 1);
 SELECT * FROM anaxlite_Order;
 SELECT * FROM anaxlite_OrderRow;
 SELECT * FROM anaxlite_ShoppingCartRow;
+
 CALL deleteOrder(1);
 
-
-SELECT * FROM `anaxlite_InventoryLow`;
+SELECT * FROM VInventoryLow;

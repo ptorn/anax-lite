@@ -57,6 +57,11 @@ for ($x = 0; $x < count($content); $x++) {
                         <button name="button">Lager</button>
                     </a>
                 </div>
+                <div class="button button-form">
+                    <a href="<?= $app->url->create('administration/webshop/inventory/log') ?>">
+                        <button name="button">Lagerlogg</button>
+                    </a>
+                </div>
             </main>
         </div>
     </div>

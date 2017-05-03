@@ -94,7 +94,19 @@
 
 
                 <h2>Kmom05</h2>
-                <p>Lite text framöver.</p>
+                <h3>Gick det bra att komma igång med det vi kallar programmering av databas, med transaktioner, lagrade procedurer, triggers, funktioner?</h3>
+                <p>Det gick bra. Mycket bra artiklar som fick en att komma in i det direkt. Detta var helt nytt för mig, men artiklarna hjälpte mig att komma igång. Man fick snabbt koll på det och kunde börja med uppgifterna. Fick lite jobb med att felsöka min trigger som inte rapporterade rätt i log tabellen, men det löste sig efter lite felsökning. Känns väldigt bra att kunna köra lite mer logik i databasen eftersom i vissa fall så är den inte relevant för applikationen.</p>
+
+                <h3>Hur är din syn på att programmera på detta viset i databasen?</h3>
+                <p>Jag gillar det. Känns oerhört mäktigt att kunna styra upp sina tabbeller med olika views för att kunna spara kod och endast jobba med det man vill komma åt i en större databas. Även med lagrade procedurer så behåller vi SQL koden i databasen och istället skapar ett API som applikationen kan jobba mot. Applikationen bryr sig inte om koden i databasen så det känns som ett bra sätt att jobba med lagrade procedurer där programmeraren utav applikationen får några procedurer att jobba mot istället och vad som sen händer i bakgrunden är inte relevant för applikationen.
+                Några reflektioner kring din kod för backenden till webbshopen?
+                Jag utgick från exempelkoden, men gjorde lite ändringar och la till lite där det vore lämpligt. Tex så en order behöver innehålla priset vid ordertillfället som kan ändras i framtiden och då måste priset för ordern vara som den var vid ordertillfället. Överlag är jag nöjd och fortfarande lite taggad av vad vi har lärt oss. Tycker det känns väldigt kraftfullt och gillar det.</p>
+                <p>Jag skapade en webshop klass som hanterar integrationen mot databasen vilket ger mig kommandon att jobba mot.</p>
+
+                <h3>Något du vill säga om koden generellt i och kring Anax Lite?</h3>
+                <p>Jag känner att det finns lite man kan effektivisera och korta ner lite. Skulle vilja lägga mer kod i SQL och skapa ett API för mina content sidor så anax-lite kan jobba med lagrade procedurer mot databasen. Lika så se över och se om jag kan lyfta ut lite kod och göra mina router lite mer dry. Skulle också vilja jobba lite mer med designen vilket jag känner har fått lida. Jag har mest fokuserat på att lösa uppgifterna och har känt att jag har haft lite mycket runt om som begränsat min tid, men jag skulle nog vilja gå igenom allt och se på det hela lite mer kritiskt.</p>
+                <p>Skulle vilja jobba lite mer med min felhantering som jag tycker inte alls är vad den borde vara. Känner att jag dragit ihop något raskt för att få det att funka, men jag skulle vilja göra det rätt.</p>
+
 
                 <h2>Kmom06</h2>
                 <p>Lite text framöver.</p>
