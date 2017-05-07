@@ -9,6 +9,10 @@ namespace Peto16\Textfilter;
 
 class TextfilterTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * Test case  the format method.
+     */
     public function testFormatToHtml()
     {
         // Test nl to br
@@ -30,6 +34,9 @@ class TextfilterTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * Test case for method with stripping html tags.
+     */
     public function testFormatToHtmlStrip()
     {
         $textFilter = new \Peto16\Textfilter\Textfilter();

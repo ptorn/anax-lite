@@ -7,6 +7,10 @@ namespace Peto16\User;
  */
 class UserTest extends \PHPUnit_Framework_TestCase
 {
+
+    /**
+     * Testcase to retrieve the full name.
+     */
     public function testGetFullName()
     {
         $user = new \Peto16\User\User();
@@ -17,6 +21,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    /**
+     * Testcase to retrieve the full aray from the user.
+     */
     public function testGetDataArray()
     {
         $user = new \Peto16\User\User();
@@ -41,7 +48,9 @@ class UserTest extends \PHPUnit_Framework_TestCase
     }
 
 
-
+    /**
+     * Test to set the data to the user from an object.
+     */
     public function testSetUserData()
     {
         $user = new \Peto16\User\User();
@@ -65,6 +74,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @runInSeparateProcess
+     * Test case to try to login a user.
      */
     public function testLoginUser()
     {
@@ -85,6 +95,5 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(true, $user->loginUser("test"));
         $this->assertEquals(false, $user->loginUser("testaaa"));
-
     }
 }
