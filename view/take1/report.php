@@ -109,7 +109,27 @@
 
 
                 <h2>Kmom06</h2>
-                <p>Lite text framöver.</p>
+                <h3>Vad du bekant med begreppet index i databaser sedan tidigare?</h3>
+                <p>Nej, detta är helt nytt för mig. Känns solklart och självklart nu att man anvnder sig utav index på data som man vill kalla på ofta istället för att köra en full table scan varje gång. Känns som ett enkelt sätt att optimera sin databas som man bör göra.</p>
+                <p>Har tidigare sett att primärnycklar dykt upp och även använt mig utav dom mest för att vi tidigare satt det som ett unikt värde som vi kunnat leta på ett enkelt sätt, men nu förstår man hur det hela hänger ihop.</p>
+
+                <h3>Berätta om hur du jobbade i uppgiften om index och vilka du valde att lägga till och skillnaden före/efter.</h3>
+                <p>Jag gick igenom mina sql filer för att se vad jag använder och kan tänkas använda som lämpar sig för ett index.</p>
+                <p>Tex i min anaxlite_User så la jag ett UNIQUE på `username` som ska vara unikt och som används vid bland annat login där jag söker på användarnamn och hämtar lösenordshashen så den gick från att köra en full tablescan till att bara läsa en rad. Tidigare så hade jag redan ett index på min primär nyckel.</p>
+                <p>I min anaxlite_Content tabell så satte jag ett index på `type` vilket jag kollar mot t.ex. när jag bara vill visa blogginlägg på en sida exempelvis. Då är det onödigt att gå igenom alla rader när jag bara vill åt post raderna så där fick det bli ett index också.</p>
+                <p>Nästa steg var att se över webshoppen. Jag tänkte på hur man kan söka och visa upp produkterna enklast. Tex satte jag ett index på name som gör det lite enklare att söka på en produkt. Man kan då tex söka på början av en produkt och på så sätt undvika att läsa alla raderna.</p>
+                <p>Jag satte även ett index på priserna där man kanske vill visa resultat för produkter mellan ett visst pris spann eller upp till ett visst pris. Det underlättar då med ett index på `price`.</p>
+                <p>I övrigt så kör jag med främmande nycklar som mysql försöker hjälpa oss med att bygga upp index för även om de inte är index i sig själva.</p>
+
+                <h3>Har du tidigare erfarenheter av att skriva kod som testar annan kod?</h3>
+                <p>Vi har tidigare gjort detta i kursen för oopython där vi fick testa våran kod med unittester. Känner att detta är något som jag vill lägga mer fokus på speciellt när projekten blir större och större och man kanske vill förbättra sin kod.</p>
+
+                <h3>Hur ser du på begreppet enhetstestning och att skriva testbar kod?</h3>
+                <p>Ju mer vi programmerar och ju större vår kod blir så känner jag att det är en god ide att jobba med enhetstester. Om man vill gå tillbaka och fixa sin kod så är det skönt om man har bra tester som kan testa funktionaliteten trotts de ingrepp man gjort. Uten tester så får man förlita sig på att man har övergripande koll på sin kod och det kanske fungerar för stunden, men om man kommer tillbaka till äldre kod och ska jobba lite så är det rätt bra med tester som redan löser den biten.</p>
+
+                <h3>Hur gick det att hitta testbar kod bland dina klasser i Anax Lite?</h3>
+                <p>Jag valde att köra på Textfilter klassen och uppnådde 100% coverage på den liksom i Guess uppgiften. Markdown använder en extern klass så skulle den fallera så kommer mitt test att snappa upp det och man får då se på markdown klassen, men för att kolla på min textfilter klass så klarar den det den ska göra.</p>
+                <p>Skrev också en test klass för min user klass som också blev 100%. Fick skapa ett objekt som klassen förväntas få och testade mina metoder med det.</p>
 
                 <h2>Kmom 07/10</h2>
                 <p>Lite text framöver.</p>
