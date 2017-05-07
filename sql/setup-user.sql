@@ -9,15 +9,18 @@ USE peto16;
 DROP TABLE IF EXISTS anaxlite_Users;
 CREATE TABLE anaxlite_Users
 (
-    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    username VARCHAR(30) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(255) DEFAULT NULL,
-    firstname VARCHAR(40) DEFAULT NULL,
-    lastname VARCHAR(40) DEFAULT NULL,
-    level INT DEFAULT 1,
-    administrator BOOLEAN DEFAULT False,
-    enabled BOOLEAN DEFAULT True
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `username` VARCHAR(30) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) DEFAULT NULL,
+    `firstname` VARCHAR(40) DEFAULT NULL,
+    `lastname` VARCHAR(40) DEFAULT NULL,
+    `level` INT DEFAULT 1,
+    `administrator` BOOLEAN DEFAULT False,
+    `enabled` BOOLEAN DEFAULT True,
+
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `username_unique` (`username`)
 );
 
 INSERT INTO

@@ -25,7 +25,9 @@ CREATE TABLE `anaxlite_Content`
   `published` DATETIME DEFAULT NULL,
   `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated` DATETIME DEFAULT NULL, --  ON UPDATE CURRENT_TIMESTAMP,
-  `deleted` DATETIME DEFAULT NULL
+  `deleted` DATETIME DEFAULT NULL,
+
+  KEY `index_type` (`type`)
 
 ) ENGINE INNODB CHARACTER SET utf8 COLLATE utf8_swedish_ci;
 

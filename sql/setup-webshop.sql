@@ -35,7 +35,7 @@ CREATE TABLE `anaxlite_ProdCategory` (
     `id` INT AUTO_INCREMENT,
     `category` CHAR(20),
 
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
 );
 
 CREATE TABLE `anaxlite_Product` (
@@ -48,7 +48,10 @@ CREATE TABLE `anaxlite_Product` (
     `updated` DATETIME DEFAULT NULL,
     `deleted` DATETIME DEFAULT NULL,
 
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    KEY `index_name` (`name`),
+    KEY `index_price` (`price`)
+
 );
 
 CREATE TABLE `anaxlite_Prod2Cat` (
